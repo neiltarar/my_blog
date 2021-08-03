@@ -22,12 +22,13 @@ h1 {
     width: 150px;
     height: 150px;
     border: 1px solid black;
+   
 }
-
 
 .square:hover {
     background-color: rgb(247, 113, 113);
     transition: 300ms;
+    cursor: pointer;
 }
 
 .square:first-child,
