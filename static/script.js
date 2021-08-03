@@ -11,7 +11,7 @@ const winningRules = [
     [2 , 4 , 6]
 ]
 
-const cells = document.querySelectorAll('[data-cell]');
+const cells = document.querySelectorAll('#cell');
 
 let circleTurn = true;
 
