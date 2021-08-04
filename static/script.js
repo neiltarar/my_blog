@@ -1,5 +1,9 @@
 const xClass = "X";
 const oClass = "O";
+let circleTurn = true;
+
+const message = document.getElementById("message");
+
 const winningRules = [
     [0 , 1 , 2],
     [3 , 4 , 5],
@@ -13,7 +17,7 @@ const winningRules = [
 
 const cells = document.querySelectorAll('#cell');
 
-let circleTurn = true;
+
 
 function Rules(currentPlayer){
     return winningRules.some(combination => {
@@ -36,6 +40,7 @@ function clickManager(event){
     if (Rules(currentMark)){
         if(currentMark === "O"){
             alert("First Player WINS!!!");
+            message.classList.add('show');
         }else {
             alert("Second Player WINS!!!")
         }
