@@ -43,7 +43,7 @@ p {
     width: 150px;
     height: 150px;
     border: 1px solid black;
-    cursor: url('../static/cursor_images/pngkey.com-red-lightning-png-1283225.png') ,pointer;
+    cursor: url('../static/cursor_images/retroCursor.png') ,pointer;
 }
 
 .square:hover {
