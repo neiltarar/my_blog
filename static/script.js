@@ -1,8 +1,11 @@
 const xClass = "X";
 const oClass = "O";
-let circleTurn = true;
 
 const message = document.getElementById("message");
+const cells = document.querySelectorAll('#cell');
+const restartButton = document.getElementById("restart");
+const board = document.getElementById("board");
+const winnerText = document.getElementById("gameEnd");
 
 const winningRules = [
     [0 , 1 , 2],
@@ -14,10 +17,6 @@ const winningRules = [
     [0 , 4 , 8],
     [2 , 4 , 6]
 ]
-
-const cells = document.querySelectorAll('#cell');
-
-
 
 function Rules(currentPlayer){
     return winningRules.some(combination => {
@@ -31,24 +30,33 @@ function swapSides() {
     circleTurn = !circleTurn;
 };
 
-
-function clickManager(event){
+function clickManager(event){ 
     const cell = event.target;
     const currentMark = circleTurn ? oClass : xClass;
     cell.textContent = currentMark;
-    console.log(currentMark);
     if (Rules(currentMark)){
         if(currentMark === "O"){
-            alert("First Player WINS!!!");
+            winnerText.innerHTML = "FIRST PLAYER <br> WINS!!!"
             message.classList.add('show');
         }else {
-            alert("Second Player WINS!!!")
+            winnerText.innerHTML = "SECOND PLAYER <br> WINS!!!"
+            message.classList.add('show');
         }
     };
     swapSides();
 };
 
 
-for(cell of cells){
-    cell.addEventListener("click" , clickManager, {once: true});
+function startGame() {
+    circleTurn = true;
+    for(cell of cells){
+        cell.textContent = "";
+        cell.removeEventListener("click", clickManager)
+        cell.addEventListener("click", clickManager, {once: true})
+    }
+    message.classList.remove('show');
 };
+
+restartButton.addEventListener("click" , startGame);
+
+startGame();

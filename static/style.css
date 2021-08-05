@@ -1,34 +1,55 @@
+@font-face {
+    font-family: 'arcade-classic';
+    src: url('../static/fonts/arcade-classic-cdnfonts/ARCADECLASSIC.TTF') 
+    format('truetype');
+}
+
+@font-face {
+    font-family: 'games';
+    src: url('../static/fonts/games-cufonfonts/Games.ttf') format('truetype')
+}
+
 body {
     margin: 0;
     text-align: center;
     margin: 100px;
+    font-family: 'arcade-classic';
 }
 
-h1 {
-    padding-bottom: 100px;
+button {
+    font-family: 'arcade-classic';
+    background-color: black;
+    color: white;
+    padding-top: 5px;
+}
+
+p {
+    font-size: 60pt;
+    color: rgb(255, 64, 64);
+    font-family: 'games';
 }
 
 .board {
-    
     display: grid;
     gap: 0px;
     grid-template-columns: repeat(3, auto);
     grid-row-start: 1;
     justify-content: center;
     align-items: center;
+    
 }
 
 .square {
     width: 150px;
     height: 150px;
     border: 1px solid black;
-   
+    cursor: url('../static/cursor_images/pngkey.com-red-lightning-png-1283225.png') ,pointer;
 }
 
 .square:hover {
     background-color: rgb(247, 113, 113);
     transition: 300ms;
-    cursor: pointer;
+    
 }
 
 .square:first-child,
@@ -58,7 +79,7 @@ h1 {
 .square {
     line-height: 150px;
     align-content: center;
-    font-size: 40pt;
+    font-size: 90pt;
 }
 
 #message {
@@ -68,7 +89,7 @@ h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, .9);
+    background-color: rgba(99, 97, 224, 0.9);
     justify-content: center;
     align-items: center;
     color: white;
