@@ -44,6 +44,9 @@ p {
     height: 150px;
     border: 1px solid black;
     cursor: url('../static/cursor_images/retroCursor.png') ,pointer;
+    line-height: 150px;
+    align-content: center;
+    font-size: 90pt;
 }
 
 .square:hover {
@@ -74,12 +77,6 @@ p {
 .square:nth-last-child( 4 ), 
 .square:nth-last-child( 7 ) {
     border-right: none;
-}
-
-.square {
-    line-height: 150px;
-    align-content: center;
-    font-size: 90pt;
 }
 
 #message {

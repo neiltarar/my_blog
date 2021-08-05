@@ -18,7 +18,11 @@ const winningRules = [
     [2 , 4 , 6]
 ]
 
-function Rules(currentPlayer){
+let drawCount = 0;
+
+
+
+function winningRule(currentPlayer){
     return winningRules.some(combination => {
         return combination.every(index => {
             return cells[index].textContent === currentPlayer;
@@ -31,30 +35,41 @@ function swapSides() {
 };
 
 function clickManager(event){ 
+    drawCount ++
     const cell = event.target;
     const currentMark = circleTurn ? oClass : xClass;
     cell.textContent = currentMark;
-    if (Rules(currentMark)){
+    if (winningRule(currentMark)){
         if(currentMark === "O"){
             winnerText.innerHTML = "FIRST PLAYER <br> WINS!!!"
             message.classList.add('show');
-        }else {
+            drawCount = 0;
+        }else if (currentMark === "X"){
             winnerText.innerHTML = "SECOND PLAYER <br> WINS!!!"
             message.classList.add('show');
-        }
-    };
+            drawCount = 0;
+        };
+    }
+    else if(drawCount === 9){
+            winnerText.innerHTML = "IT IS A DRAW!!!"
+            message.classList.add('show');
+            drawCount = 0;
+        };
+
+
     swapSides();
 };
 
 
 function startGame() {
+    message.classList.remove('show');
     circleTurn = true;
     for(cell of cells){
         cell.textContent = "";
         cell.removeEventListener("click", clickManager)
         cell.addEventListener("click", clickManager, {once: true})
     }
-    message.classList.remove('show');
+    
 };
 
 restartButton.addEventListener("click" , startGame);
