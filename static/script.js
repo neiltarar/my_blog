@@ -47,6 +47,8 @@ function swapSides() {
 function clickManager(event){ 
     const cell = event.target;
     const currentMark = circleTurn ? oClass : xClass;
+
+    // Sending the server which cell was marked and whether it was an "X" or "O"
     socket.send(cell.dataset['cell']+currentMark);
 };
 
@@ -85,7 +87,7 @@ socket.on('message' , function(data) {
 
     else{
         for(cell of cells){
-            cell.addEventListener("click", clickManager, {once: true})
+            // Matching the mark with the correct cell by checking its data-attribute
             if(cell.dataset['cell'] === data[0]){
                 cell.textContent = data[1];
                 swapSides()
