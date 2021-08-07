@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'YOUR SECRET KEY'
+app.config['SECRET_KEY'] = 'asdfiouuiopYhjjsY_s8*67567'
 socketio = SocketIO(app)
 
 @app.route('/')

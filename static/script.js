@@ -118,6 +118,13 @@ socket.on('message' , function(data) {
 
 })
 
+
+chatBar.addEventListener("keydown", function search(e){
+    if(e.keyCode === 13){
+        chatButton.click();
+    }
+})
+
 chatButton.addEventListener("click", (event)=>{
     socket.emit('chat_message', chatInput.value);
     chatBar.value = ""
