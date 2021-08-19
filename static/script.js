@@ -17,7 +17,7 @@ const chatButton = document.getElementById("messageButton");
 const chatWrite = document.getElementById("receiveMessage");
 const loginInput = document.getElementById("loginId");
 const loginButton = document.getElementById("loginButton");
-const fullRoom = document.getElementById("roomFull")
+const fullRoom = document.getElementById("room_full")
 
 const winningRules1 = [
     [0 , 1 , 2],

@@ -160,8 +160,29 @@ input {
     flex-direction: column;
 }
 
-#boardAndPlayerInfo{
-    margin: 0px 250px 0px 400px;
+#room_full {
+    width: auto;
+    height: auto;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: -55px;
+    bottom: -165px;
+    background-color: rgba(99, 97, 224, 0.9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
+#room_full.show {
     display: flex;
-    justify-content: space-evenly;
+}
+
+#boardAndPlayerInfo{
+    margin: auto;
+    display: flex;
+    justify-content: center;
 }
