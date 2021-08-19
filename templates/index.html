@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <script src="./static/script.js" defer></script>
+    <title>Tic-Tac-Toe</title>
+</head>
+<body>
+    <p id="header">||||||||   Tic  ||||||  Tac  ||||  Toe  ||</p>
+    <div class="token">
+        <ul id="token">
+            <!-- 
+                ****** FUTURE IMPROVEMENTS ********
+                Here is for future improvement to give players a choice to choose a character to play with 
+            -->
+
+            <!-- <button id="tokenButton" data-token="Mspacman"> <img src="./static/token_images/Mspacman.png" alt="lady pacman token"></button>
+            <button id="tokenButton" data-token="SuperMario"> <img src="./static/token_images/Mario.png" alt="super mario token"> </button> -->
+            <!-- <button id="tokenButton"></button>
+            <button id="tokenButton"></button> -->
+        </ul>
+    </div>
+    <div id="boardAndPlayerInfo">
+        <div id="playerInfo">
+            
+        </div>
+        <div class="board" id="board">
+            <div class="square" id="cell" data-cell="0"></div>
+            <div class="square" id="cell" data-cell="1"></div>
+            <div class="square" id="cell" data-cell="2"></div>
+            <div class="square" id="cell" data-cell="3"></div>
+            <div class="square" id="cell" data-cell="4"></div>
+            <div class="square" id="cell" data-cell="5"></div>
+            <div class="square" id="cell" data-cell="6"></div>
+            <div class="square" id="cell" data-cell="7"></div>
+            <div class="square" id="cell" data-cell="8"></div>
+        </div>
+    </div>
+    <div class="login">
+        <div id="login">
+            <input id="loginId" placeholder="What is your username">
+            <button id="loginButton">Login</button>
+        </div>
+    </div>
+    <div id="message">
+        <div id="gameEnd"></div>
+        <button id="restart">Restart</button>
+    </div>
+    <div id="chatBox">
+        <input id="chatInput" placeholder="Type your message here..." onkeydown="search(this)"> 
+        <button id="messageButton">send message</button>
+        <p id="receiveMessage"></p>
+    </div>
+</body>
+</html>
