@@ -47,24 +47,18 @@ function swapSides() {
 function clickManager(event){ 
     const cell = event.target;
     const currentMark = circleTurn ? oClass : xClass;
-    
     // Sending the server which cell was marked and whether it was an "X" or "O"
     socket.send(cell.dataset['cell']+currentMark);
 };
 
 
 function startGame() {
-    
     message.classList.remove('show');
     circleTurn = true;
-    
     for(cell of cells){
         //Clear all the cells to start a new game 
         cell.textContent = "";
-        
         cell.removeEventListener("click", clickManager)
-        
-        socket.emit("reset_rules" , winningRules1)
         cell.addEventListener("click", clickManager, {once: true})
     }
 }
@@ -92,11 +86,21 @@ socket.on('message' , function(data) {
             // Matching the mark with the correct cell by checking its data-attribute
             if(cell.dataset['cell'] === data[0]){
                 cell.textContent = data[1];
+                //cell.removeEventListener("click")
                 swapSides()
-                
-                }
+                socket.on('one_move' , function(msg){
+                    
+                    if(msg === data[1]){
+                        console.log('my move')
+                        cell.removeEventListener("click")
+                    } else {
+                        cell.addEventListener("click" , clickManager , {once : true})
+                    }
+                })
             }
+        }
     }
+    
     else {
         winnerText.innerHTML = `${data}`
         message.classList.add('show');
@@ -116,16 +120,15 @@ chatBar.addEventListener("keydown", function search(e){
 
 loginButton.addEventListener("click", (event)=>{
     socket.emit('username', loginInput.value);
-    
     document.getElementById("login").style.display = 'none';
     
 })
 
 socket.on('private_message', function(msg){
-    if(msg === "room_full"){
-        fullRoom.classList.add('show')
-    } else{
-        alert(msg)
+        if(msg === "room_full"){
+            fullRoom.classList.add('show')
+        } else{
+            alert(msg)
     }
     
 })
@@ -136,6 +139,6 @@ socket.on('private_chat_message', function(msg){
 })
 
 socket.on('username', function(username){
-    console.log(username);
+    
     //document.getElementById("playerInfo").textContent = username;
 })
