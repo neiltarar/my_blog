@@ -14,9 +14,10 @@
 <br> <br/>
 
 ### Installation of dependencies:
-<br>
+
 Please intall the adviced versions, there are some backwards compatibility issues with SocketIO.
 <br>
+
 - `pip install Flask`
 
 - `pip install --upgrade python-socketio==4.6.0`
