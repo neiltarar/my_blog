@@ -8,13 +8,14 @@
 - flask-socketio
 - Flask
 - socketio JavaScript Library 
-<br>
-Please intall the adviced versions, there are some backwards compatibility issues with SocketIO.
+
 
     - https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js
 <br> <br/>
 
 ### Installation of dependencies:
+<br>
+Please intall the adviced versions, there are some backwards compatibility issues with SocketIO.
 - `pip install Flask`
 
 - `pip install --upgrade python-socketio==4.6.0`
