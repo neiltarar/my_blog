@@ -1,58 +1,23 @@
 from flask import Flask, render_template,request
 from flask_socketio import SocketIO, send, emit
+import os
+from models.tictactoe_logic import *
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'YOUR SECRET KEY HERE'
 socketio = SocketIO(app)
 
 @app.route('/')
-def sessions():
-    return render_template('index.html')
-
-users = {}
-usernames = []
-winningRules1 = [
-    [0 , 1 , 2],
-    [3 , 4 , 5],
-    [6 , 7 , 8],
-    [0 , 3 , 6],
-    [1 , 4 , 7],
-    [2 , 5 , 8],
-    [0 , 4 , 8],
-    [2 , 4 , 6]
-]
-
-result = []
-count = 0
-
-# Checking if all 
-# elements in a List are same 
-def checkList(lst):
-    ele = lst[0]
-    chk = True
-    
-    # Comparing each element with first item 
-    for item in lst:
-        if ele != item:
-            chk = False
-            break;
-              
-    if (chk == True and count < 10): 
-        result.append("win")
-        
-
-def winningRule(msg):
-    global count
-    count += 1
-    for i in range(len(winningRules1)):
-        
-        a = winningRules1[i]
-        for item in range(3):
-            
-            if(a[item] == int(msg[0])):
-                a[item] = [str(msg[1])]
-                checkList(a)
+def home():
+    return render_template('home.jinja')
                 
+@app.route('/blog')
+def blog():
+    return render_template('blog.jinja')
+
+@app.route('/tic-tac-toe')
+def tic_tac_toe():
+    return render_template('posts/tic-tac-toe.jinja')
 
 @socketio.on('username')
 def receive_username(username):

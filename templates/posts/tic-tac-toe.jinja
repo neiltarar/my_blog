@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends "base.jinja" %}
+
+{% block head %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./static/style.css">
+    <link rel="stylesheet" href="../../static/css/tic-tac-toe_style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-    <script src="./static/script.js" defer></script>
+    <script src="../../static/javascript/tic-tac-toe_script.js" defer></script>
     <title>Tic-Tac-Toe</title>
-</head>
-<body>
+{% endblock %}
+    
+{% block main %}
     <p id="header">||||||||   Tic  ||||||  Tac  ||||  Toe  ||</p>
     <div class="token">
         <ul id="token">
@@ -51,5 +52,5 @@
         <button id="messageButton">send message</button>
         <p id="receiveMessage"></p>
     </div>
-</body>
-</html>
+{% endblock %}
+    

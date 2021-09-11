@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'Press-Start-2P';
+    src: url('../fonts/Press_Start_2P/PressStart2P-Regular.ttf') 
+    format('truetype');
+}
+
+:root {
+    --navbar-height: 61px;
+}
+
+.container, li, a {
+    font-family: 'Press-Start-2P';
+    text-decoration: none;
+    list-style-type: none;
+    width: auto;
+    display: grid;
+    justify-content: space-evenly;
+    justify-items: stretch;
+    grid-template-areas:
+        "nav nav"
+        "main main"
+        "footer footer";
+}
+
+.navigation-bar {
+    height: var(--navbar-height);
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    grid-area: nav;
+}
+
+.home-page{
+    margin: 10px;
+}
+
+.navigation-list {
+    margin: 10px;
+    display: flex; 
+}
+
+
+li {
+    padding: 15px;
+    
+}
+
+.main {
+    padding: 20px;
+    grid-area: main;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center
+}
+
+img {
+    width: 250px;
+}

@@ -1,12 +1,12 @@
 @font-face {
     font-family: 'arcade-classic';
-    src: url('../static/fonts/arcade-classic-cdnfonts/ARCADECLASSIC.TTF') 
+    src: url('../../static/fonts/arcade-classic-cdnfonts/ARCADECLASSIC.TTF') 
     format('truetype');
 }
 
 @font-face {
     font-family: 'games';
-    src: url('../static/fonts/games-cufonfonts/Games.ttf') format('truetype')
+    src: url('../../static/fonts/games-cufonfonts/Games.ttf') format('truetype')
 }
 
 body {

@@ -30,8 +30,6 @@ const winningRules1 = [
     [2 , 4 , 6]
 ]
 
-
-
 function winningRule(currentPlayer){
     return winningRules.some(combination => {
         return combination.every(index => {
