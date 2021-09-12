@@ -8,7 +8,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/home/clckwrk/Documents/GA/GA_Practical/projects/GA_Project2/tic-tac-toe/my_webiste"
+setenv VIRTUAL_ENV "/home/clckwrk/Documents/GA/GA_Practical/projects/GA_Project2/neil_tarar_blog/my_blog"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"
@@ -17,8 +17,8 @@ setenv PATH "$VIRTUAL_ENV/bin:$PATH"
 set _OLD_VIRTUAL_PROMPT="$prompt"
 
 if (! "$?VIRTUAL_ENV_DISABLE_PROMPT") then
-    if ("my_webiste" != "") then
-        set env_name = "my_webiste"
+    if ("my_blog" != "") then
+        set env_name = "my_blog"
     else
         if (`basename "VIRTUAL_ENV"` == "__") then
             # special case for Aspen magic directories

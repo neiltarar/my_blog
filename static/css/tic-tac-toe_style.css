@@ -44,7 +44,7 @@ p {
     width: 100px;
     height: 100px;
     border: 1px solid black;
-    cursor: url('../static/cursor_images/retroCursor.png') ,pointer;
+    cursor: url('../../static/images/tic-tac-toe-cursor/retroCursor.png') ,pointer;
     line-height: 100px;
     align-content: center;
     font-size: 90pt;

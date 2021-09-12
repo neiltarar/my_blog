@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/clckwrk/Documents/GA/GA_Practical/projects/GA_Project2/tic-tac-toe/my_webiste"
+VIRTUAL_ENV="/home/clckwrk/Documents/GA/GA_Practical/projects/GA_Project2/neil_tarar_blog/my_blog"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -54,8 +54,8 @@ fi
 
 if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ] ; then
     _OLD_VIRTUAL_PS1="${PS1:-}"
-    if [ "x(my_webiste) " != x ] ; then
-	PS1="(my_webiste) ${PS1:-}"
+    if [ "x(my_blog) " != x ] ; then
+	PS1="(my_blog) ${PS1:-}"
     else
     if [ "`basename \"$VIRTUAL_ENV\"`" = "__" ] ; then
         # special case for Aspen magic directories
