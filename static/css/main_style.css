@@ -8,6 +8,11 @@
     --navbar-height: 61px;
 }
 
+canvas { 
+    background: #eee; 
+    border:1px solid #000000;
+}
+
 .container, li, a {
     font-family: 'Press-Start-2P';
     text-decoration: none;
@@ -23,7 +28,7 @@
 }
 
 .navigation-bar {
-    height: var(--navbar-height);
+   
     margin: 10px;
     display: flex;
     justify-content: space-between;
@@ -46,7 +51,7 @@ li {
 }
 
 .main {
-    padding: 20px;
+    padding: 40px;
     grid-area: main;
     height: 60vh;
     display: flex;
@@ -56,5 +61,5 @@ li {
 }
 
 img {
-    width: 250px;
+    width: 25%;
 }

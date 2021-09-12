@@ -1,5 +1,7 @@
 {% extends "base.jinja" %}
-
+{% block head %}
+    <script src="../static/javascript/mini_game.js" defer></script>
+{% endblock %}
 {% block main %}
     <img class="profile-img" src="../static/images/profile_pic/profile.png" alt="profile picture">
     <div class="profile-info">
@@ -7,4 +9,9 @@
         <h2>A DIY Enthusiast</h2>
         <p> Bio Blurb Here </p>
     </div>
+    <section>
+        <canvas id="minigame" width= '500' height= '150'>
+            
+        </canvas>
+    </section>
 {% endblock  %}
