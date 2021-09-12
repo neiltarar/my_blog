@@ -13,10 +13,19 @@ canvas {
     border:1px solid #000000;
 }
 
-.container, li, a {
+li, a {
     font-family: 'Press-Start-2P';
     text-decoration: none;
     list-style-type: none;
+    padding: 4px;
+}
+
+.container {
+    font-family: 'Press-Start-2P';
+    text-decoration: none;
+    list-style-type: none;
+    margin-left: 40%;
+    margin-right: 40%;
     width: auto;
     display: grid;
     justify-content: space-evenly;
@@ -28,8 +37,8 @@ canvas {
 }
 
 .navigation-bar {
-   
-    margin: 10px;
+    font-size: 10pt;
+    margin-top: 30px;
     display: flex;
     justify-content: space-between;
     grid-area: nav;
@@ -44,14 +53,14 @@ canvas {
     display: flex; 
 }
 
-
+/* 
 li {
     padding: 15px;
     
-}
+} */
 
 .main {
-    padding: 40px;
+    padding: 10px;
     grid-area: main;
     height: 60vh;
     display: flex;
@@ -60,6 +69,18 @@ li {
     justify-content: center
 }
 
+.profile-info {
+    font-size: 10pt;
+    line-height: 1.6;
+}
+
+h2 {
+    text-align: center;
+    font-size: 15pt;
+    color: blue;
+}
+
 img {
-    width: 25%;
+    width: 30%;
+    padding: 15px;
 }
