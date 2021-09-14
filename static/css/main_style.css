@@ -22,10 +22,12 @@
     margin-right: 15%;
     max-width: 900px;
     display: grid;
-    grid-template-areas: "nav nav"
-        "avatar avatar"
-        "main main"
-        "footer footer";  
+    grid-template-areas: 
+        "nav "
+        "avatar "
+        "main "
+        "comment "
+        "footer ";  
 }
 
 .main {
@@ -56,6 +58,17 @@ section {
     display: flex;
     padding-top: 12px;
     justify-content: space-around;
+}
+
+.comments {
+        display: flex;
+        grid-area: comment;
+        
+}
+
+.comment-bar{
+    width: 400px;
+    height: 80px;
 }
 
 canvas { 

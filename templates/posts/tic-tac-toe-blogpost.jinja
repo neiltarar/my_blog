@@ -1,5 +1,9 @@
 {% extends "base.jinja" %}
 
+{% block head %}
+    <script src="../static/javascript/blog/blog.js" defer></script>
+{% endblock %}
+
 {% block main %}
 
 <div> 
@@ -14,4 +18,18 @@
         In addition everyone connected to the server can watch the game being played and send a message to the main screen. 
     </p>
 </div>
+{% endblock %}
+
+{% block comments %}
+<div>
+    <form action="/add_comment" method="POST">
+        Comment:<input class="comment-bar" type="text" name="comment"><br>
+        <input type="submit" value="COMMENT">
+    </form>
+    <div id='new-comment'>
+        {{comments}}
+        {# Create New Comment With DOM #}
+    </div>
+</div>
+
 {% endblock %}

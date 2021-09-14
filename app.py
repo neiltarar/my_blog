@@ -1,7 +1,9 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template, redirect, request
 from flask_socketio import SocketIO, send, emit
 import os
+
 from models.tictactoe_logic import *
+from models.comments import read_comment , write_comment
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'YOUR SECRET KEY HERE'
@@ -17,7 +19,19 @@ def blog():
 
 @app.route('/tic-tac-toe')
 def tic_tac_toe():
-    return render_template('posts/tic-tac-toe-blogpost.jinja')
+    comments = read_comment()
+    return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments)
+
+@app.route('/add_comment' , methods =["POST"])
+def add_comment():
+    new_comment = request.form.get('comment')
+    print(new_comment)
+    write_comment(1, new_comment[0][0], False)
+    # write_comment(0, new_comment , 'False')
+    return render_template ('/posts/tic-tac-toe-blogpost.jinja')
+
+
+########################## SOCKET CONNECTIONS #######################################################
 
 @socketio.on('username')
 def receive_username(username):
