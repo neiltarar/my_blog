@@ -1,0 +1,17 @@
+{% extends "base.jinja" %}
+
+{% block main %}
+
+<div> 
+    <h1> My Tic Tac Toe Project </h1>
+</div>
+<div>
+    <p> 
+        The game runs on Flask server wrapped by socketio using Python socketio library. I used an apache server to reverse proxy to the flask server and 
+        port forwarded it to the internet on www.ga-project1.duckdns.org.
+        At this stage server doesn't create individual rooms and broadcast each message to all connected clients.
+        When the games ends with a win or draw a restart page pops up. If one player presses the 'Restart' button, game restarts for both parties. 
+        In addition everyone connected to the server can watch the game being played and send a message to the main screen. 
+    </p>
+</div>
+{% endblock %}

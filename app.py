@@ -17,7 +17,7 @@ def blog():
 
 @app.route('/tic-tac-toe')
 def tic_tac_toe():
-    return render_template('posts/tic-tac-toe.jinja')
+    return render_template('posts/tic-tac-toe-blogpost.jinja')
 
 @socketio.on('username')
 def receive_username(username):

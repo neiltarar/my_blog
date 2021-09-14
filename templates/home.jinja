@@ -1,12 +1,14 @@
 {% extends "base.jinja" %}
 {% block head %}
-    <script src="../static/javascript/mini_game.js" defer></script>
+    <script src="../static/javascript/space_shooter/mini_game.js" defer></script>
 {% endblock %}
 {% block main %}
-    <img class="profile-img" src="../static/images/profile_pic/profile.png" alt="profile picture">
+    <div id="crossfade">
+        <img class="bottom" src="../static/images/profile_pic/pixel_art_profile.png" alt="profile picture">
+        <img class="top" src="../static/images/profile_pic/profile.png" alt="pixel art profile picture">
+    </div>
     <div class="profile-info">
         <h2>Neil Tarar</h2>
-     
         <p> I am a self-thought DIY enthusiast who is constantly working on electronics projects. For the last 3 years I have been teaching myself various programming languages; Python, C, C++ and use them in Raspberry Pi, Arduino and ARM Cortex-M 32-bit microcontroller driven projects. </p>
     </div>
     <section>
