@@ -1,18 +1,34 @@
 from flask import Flask, render_template, redirect, request
 from flask_socketio import SocketIO, send, emit
 import os
+import bcrypt
+from decouple import config
 
 from models.tictactoe_logic import *
 from models.comments import read_comment , write_comment
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'YOUR SECRET KEY HERE'
+app.config['SECRET_KEY'] = config('FLASK_SECRET_KEY')
 socketio = SocketIO(app)
 
 @app.route('/')
 def home():
+    print(request.__dict__['root_path'])
     return render_template('home.jinja')
-                
+
+@app.route('/signup' , methods=["POST"])
+def signup():
+    email = request.form.get('email')
+    name = request.form.get('uname')
+    password = request.form.get('password')
+    confirm_password = request.form.get('confirm-psw')
+    print(email)
+    print(name)
+    print(password)
+    
+    print('redirecting')
+    return redirect(request.referrer)
+
 @app.route('/blog')
 def blog():
     return render_template('blog.jinja')
@@ -21,13 +37,14 @@ def blog():
 def tic_tac_toe():
     comments = read_comment()[::-1]
     print(comments[::-1])
+    
     return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments)
 
 @app.route('/tic-tac-toe-play')
 def tictactoeplay():
     return render_template('posts/tic-tac-toe.jinja')
 
-########################## HANDLE POST/GET REQUESTS ################################################33
+########################## HANDLE POST/GET REQUESTS ################################################
 
 @app.route('/add_comment' , methods =["POST"])
 def add_comment():
