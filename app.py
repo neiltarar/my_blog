@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, session
 from flask_socketio import SocketIO, send, emit
 import os
 import bcrypt
@@ -6,6 +6,7 @@ from decouple import config
 
 from models.tictactoe_logic import *
 from models.comments import read_comment , write_comment
+from models.signup_login import login_check, signup_new_user
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config('FLASK_SECRET_KEY')
@@ -20,13 +21,19 @@ def home():
 def signup():
     email = request.form.get('email')
     name = request.form.get('uname')
-    password = request.form.get('password')
-    confirm_password = request.form.get('confirm-psw')
-    print(email)
-    print(name)
-    print(password)
-    
-    print('redirecting')
+    password = request.form.get('psw')
+    password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+    signup_new_user(email, name , password_hash)
+    return redirect(request.referrer)
+
+@app.route('/login' , methods=['POST'])
+def login():
+    email = request.form.get('e-mail')
+    password = request.form.get('psw')
+    result = login_check('aniltarar@gmail.com')
+    password_hash = result[0][3]
+    print(result)
+    valid = bcrypt.checkpw(password.encode(), password_hash.encode())
     return redirect(request.referrer)
 
 @app.route('/blog')
@@ -36,8 +43,7 @@ def blog():
 @app.route('/tic-tac-toe')
 def tic_tac_toe():
     comments = read_comment()[::-1]
-    print(comments[::-1])
-    
+
     return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments)
 
 @app.route('/tic-tac-toe-play')
@@ -49,7 +55,6 @@ def tictactoeplay():
 @app.route('/add_comment' , methods =["POST"])
 def add_comment():
     new_comment = request.form.get('comment')
-    print(new_comment)
     write_comment(1, new_comment, False)
     # write_comment(0, new_comment , 'False')
     return redirect ('/tic-tac-toe')
