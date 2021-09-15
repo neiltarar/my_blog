@@ -1,0 +1,81 @@
+@font-face {
+    font-family: 'Press-Start-2P';
+    src: url('../fonts/Press_Start_2P/PressStart2P-Regular.ttf'); 
+    
+}
+
+.main{
+    flex-direction: column;
+    font-size: 14pt;
+}
+
+#blog-article{
+    display: flex;
+}
+
+#id01{
+    width: auto;
+    height: auto;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: -55px;
+    bottom: -165px;
+    background-color: rgba(99, 97, 224, 0.9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
+#id01.show {
+    display: flex;
+}
+
+#signup-window {
+    width: auto;
+    height: auto;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: -55px;
+    bottom: -165px;
+    background-color: rgba(99, 97, 224, 0.9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
+#signup-window.show {
+    display: flex;
+}
+
+.login-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 300px;
+    font-family: 'Press-Start-2P',"Chicago Plain",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 16pt;
+}
+
+#login-signup-element{
+    display: flex;
+    justify-content: space-between;
+}
+
+#close-window, #signup-close-window {
+    color: black;
+    align-self: flex-end;
+    
+}
+
+#close-window:hover , #signup-close-window:hover {
+    color: white;
+    background-color: red;
+}

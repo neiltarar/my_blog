@@ -40,11 +40,17 @@
         
         {% endblock %}
     </div>
+    <div class=blog-article>
+        {% block article %}
+        
+        {% endblock %}
+    </div>
     <section class="comments">
         {% block comments %}
         
         {% endblock %}
     </section>
+    
     <footer class='footer'>
     <ul class="logos">
             <li>logo here</li>
@@ -52,5 +58,43 @@
             <li>logo here</li>
         </ul>
     </footer>
+
+{# Login hidden window put in the base to be called from every page if needed. #}
+    <div id="id01" >
+        <form  action="/login" method="POST">
+            <div class='login-box'>
+                <span id="close-window">x</span>
+                <label for="uname"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="uname" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+                    
+                <button type="submit" class="button">Login</button>
+            </div>
+        </form>
+    </div>
+{# Sign up hidden window put in the base to be called from every page if needed.  #}
+    <div id="signup-window" >
+        <form action="/signup" method="POST">
+            {# using same classname as login box since it's using the same css settings #}
+            <div class='login-box'>
+                <span id="signup-close-window">x</span>
+                <label for="uname"><b>username</b></label>
+                <input type="text" placeholder="Enter Username" name="uname" required>
+
+                <label for="email"><b>email</b></label>
+                <input type="text" placeholder="Enter Username" name="email" required>
+                
+                <label for="confirm-email"><b>confirm email</b></label>
+                <input type="text" placeholder="Enter Username" name="confirm-email" required>
+
+                <label for="psw"><b>password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+                    
+                <button type="submit" class="button">Login</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

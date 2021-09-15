@@ -138,5 +138,5 @@ dmypy.json
 cython_debug/
 
 # Visual Studio Settings
-.vscode
+*.vscode
 settings.json

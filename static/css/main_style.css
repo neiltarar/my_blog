@@ -18,7 +18,7 @@
 
 .container {
     font-family: "sh-pinscher","Chicago Plain",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-    margin-left: 30%;
+    margin-left: 20%;
     margin-right: 15%;
     max-width: 900px;
     display: grid;
@@ -31,6 +31,7 @@
 }
 
 .main {
+    font-size: 15pt;
     display: flex;
     flex-direction: column;
     padding: 60px;
@@ -62,6 +63,7 @@ section {
 
 .comments {
         display: flex;
+        flex-direction: column;
         grid-area: comment;
         
 }
@@ -93,7 +95,7 @@ li, a {
 }
 
 .home-page{
-    font-family: "Blox2","Chicago Plain",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;;
+    font-family: "Blox2","Chicago Plain",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     margin: 10px;
     font-size: 26pt;
 }
@@ -105,7 +107,8 @@ li, a {
 
 
 .profile-info {
-   
+    font-size: 18pt;
+    line-height: 1.6;
     padding: 10px;
     grid-area: main;
     display: flex;
@@ -114,10 +117,6 @@ li, a {
     justify-content: flex-start;
 }
 
-.profile-info {
-    font-size: 16pt;
-    line-height: 1.6;
-}
 
 h2 {
     text-align: center;
@@ -138,4 +137,19 @@ img {
 .footer :only-child{
     display: flex;
     justify-content: space-around;
+}
+
+
+.button {
+
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 15px;
+    font-family: 'Press-Start-2P';
+    
+}
+
+.button:hover{
+    background-color: red;
 }

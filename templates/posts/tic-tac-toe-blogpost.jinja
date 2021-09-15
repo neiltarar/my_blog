@@ -1,13 +1,14 @@
 {% extends "base.jinja" %}
 
 {% block head %}
+    <link rel="stylesheet" href="../static/css/blog_style.css">
     <script src="../static/javascript/blog/blog.js" defer></script>
 {% endblock %}
 
 {% block main %}
 
 <div> 
-    <h1> My Tic Tac Toe Project </h1>
+    <h1 style='color:red;'> My Tic Tac Toe Project </h1>
 </div>
 <div>
     <p> 
@@ -18,18 +19,29 @@
         In addition everyone connected to the server can watch the game being played and send a message to the main screen. 
     </p>
 </div>
+<div>
+    You can play the game <a href="./tic-tac-toe-play">here</a>
+</div>
 {% endblock %}
+
+
 
 {% block comments %}
-<div>
+    <div id="login-signup-element">
+        <button class="button" id='login-button'>login</button>
+        <br>
+        <button class="button" id="signup-button">sign up</button>
+    </div>
+    <hr>
     <form action="/add_comment" method="POST">
-        Comment:<input class="comment-bar" type="text" name="comment"><br>
-        <input type="submit" value="COMMENT">
+        <label for="comment"><b> Comment: </b></label>
+        <input class="comment-bar" type="text" name="comment" placeholder="start discussion"><br><br>
+        <input class="button" id="comment-button" type="submit" value="COMMENT">
     </form>
     <div id='new-comment'>
-        {{comments}}
-        {# Create New Comment With DOM #}
+        {% for comment in comments %}
+        <p> {{comment}} </p>
+        {% endfor %}
     </div>
-</div>
-
 {% endblock %}
+

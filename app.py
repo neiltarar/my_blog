@@ -19,16 +19,23 @@ def blog():
 
 @app.route('/tic-tac-toe')
 def tic_tac_toe():
-    comments = read_comment()
+    comments = read_comment()[::-1]
+    print(comments[::-1])
     return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments)
+
+@app.route('/tic-tac-toe-play')
+def tictactoeplay():
+    return render_template('posts/tic-tac-toe.jinja')
+
+########################## HANDLE POST/GET REQUESTS ################################################33
 
 @app.route('/add_comment' , methods =["POST"])
 def add_comment():
     new_comment = request.form.get('comment')
     print(new_comment)
-    write_comment(1, new_comment[0][0], False)
+    write_comment(1, new_comment, False)
     # write_comment(0, new_comment , 'False')
-    return render_template ('/posts/tic-tac-toe-blogpost.jinja')
+    return redirect ('/tic-tac-toe')
 
 
 ########################## SOCKET CONNECTIONS #######################################################

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../static/css/tic-tac-toe_style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-    <script src="../../static/javascript/tic-tac-toe_script.js" defer></script>
+    <script src="../../static/javascript/tic-tac-toe/tic-tac-toe_script.js" defer></script>
     <title>Tic-Tac-Toe</title>
 {% endblock %}
     
@@ -18,9 +18,7 @@
         </ul>
     </div>
     <div id="boardAndPlayerInfo">
-        <div id="playerInfo">
-            
-        </div>
+        <div id="playerInfo"></div>
         <div class="board" id="board">
             <div class="square" id="cell" data-cell="0"></div>
             <div class="square" id="cell" data-cell="1"></div>
@@ -32,6 +30,11 @@
             <div class="square" id="cell" data-cell="7"></div>
             <div class="square" id="cell" data-cell="8"></div>
         </div>
+    </div>
+    <div id="chatBox">
+            <input id="chatInput" placeholder="Type your message here..." onkeydown="search(this)"> 
+            <button id="messageButton">send message</button>
+            <p id="receiveMessage"></p>
     </div>
     <div id="room_full">
         <p> Room is full!</p>
@@ -47,10 +50,6 @@
         <div id="gameEnd"></div>
         <button id="restart">Restart</button>
     </div>
-    <div id="chatBox">
-        <input id="chatInput" placeholder="Type your message here..." onkeydown="search(this)"> 
-        <button id="messageButton">send message</button>
-        <p id="receiveMessage"></p>
-    </div>
+    
 {% endblock %}
     
