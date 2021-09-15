@@ -14,7 +14,6 @@ socketio = SocketIO(app)
 
 @app.route('/')
 def home():
-    print(request.__dict__['root_path'])
     return render_template('home.jinja')
 
 @app.route('/signup' , methods=["POST"])
@@ -30,11 +29,18 @@ def signup():
 def login():
     email = request.form.get('e-mail')
     password = request.form.get('psw')
-    result = login_check('aniltarar@gmail.com')
-    password_hash = result[0][3]
-    print(result)
+    result = login_check(email)[0]
+    password_hash = result[3]
     valid = bcrypt.checkpw(password.encode(), password_hash.encode())
-    return redirect(request.referrer)
+    if valid == False:
+        return redirect(request.referrer)
+    else:
+        user_id = result[0]
+        user_name = result[2]
+        session['user_name'] = user_name
+        session['user_id'] = user_id
+    
+        return redirect(request.referrer)
 
 @app.route('/blog')
 def blog():
@@ -43,8 +49,9 @@ def blog():
 @app.route('/tic-tac-toe')
 def tic_tac_toe():
     comments = read_comment()[::-1]
-
-    return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments)
+    user = session.get('user_name')
+    user_id = session.get('user_id')
+    return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments , user = user)
 
 @app.route('/tic-tac-toe-play')
 def tictactoeplay():
@@ -62,6 +69,11 @@ def add_comment():
 
 ########################## SOCKET CONNECTIONS #######################################################
 
+
+
+
+
+######################## SOCKET CONNECTIONS FOR TIC-TAC-TOE ########################################
 @socketio.on('username')
 def receive_username(username):
     if(len(users) < 2):

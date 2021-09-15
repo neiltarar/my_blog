@@ -1,6 +1,3 @@
-console.log('hello')
-
-// Get the modal
 const modal = document.getElementById('id01');
 const signupWindow = document.getElementById('signup-window');
 const loginButton = document.getElementById('login-button');

@@ -36,8 +36,14 @@
     <form action="/add_comment" method="POST">
         <label for="comment"><b> Comment: </b></label>
         <input class="comment-bar" type="text" name="comment" placeholder="start discussion"><br><br>
-        <input class="button" id="comment-button" type="submit" value="COMMENT">
+        {% if user != None %}
+            <input class="button" id="comment-button" type="submit" value="COMMENT">
+        {% else %}
+            <p>login in to comment</p>
+        {% endif %}
+        
     </form>
+    {{user}} 
     <div id='new-comment'>
         {% for comment in comments %}
         <p> {{comment}} </p>
