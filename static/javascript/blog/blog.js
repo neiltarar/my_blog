@@ -17,6 +17,7 @@ closeButton.addEventListener('click' , (event) => {
 
 signupButton.addEventListener('click' , (event) =>{
     signupWindow.classList.add('show')
+    modal.classList.remove('show')
 });
 
 signupCloseButton.addEventListener('click' , (event)=>{

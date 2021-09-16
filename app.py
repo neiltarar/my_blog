@@ -12,10 +12,14 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = config('FLASK_SECRET_KEY')
 socketio = SocketIO(app)
 
+############################ HOME PAGE ################################
+
 @app.route('/')
 def home():
     return render_template('home.jinja')
 
+
+########################### SIGNUP - LOGIN - LOGOUT HANDLE ########################################
 @app.route('/signup' , methods=["POST"])
 def signup():
     email = request.form.get('email')
@@ -29,18 +33,38 @@ def signup():
 def login():
     email = request.form.get('e-mail')
     password = request.form.get('psw')
-    result = login_check(email)[0]
-    password_hash = result[3]
-    valid = bcrypt.checkpw(password.encode(), password_hash.encode())
-    if valid == False:
+
+    ###### Handle wrong password entry
+    if login_check(email) == []:
         return redirect(request.referrer)
     else:
-        user_id = result[0]
-        user_name = result[2]
-        session['user_name'] = user_name
-        session['user_id'] = user_id
+        result = login_check(email)[0]
+        password_hash = result[3]
+        valid = bcrypt.checkpw(password.encode(), password_hash.encode())
+        if valid == False:
+            return redirect(request.referrer)
+        else:
+            user_id = result[0]
+            user_name = result[2]
+            session['user_id'] = user_id
+            session['user_name'] = user_name
+            
+            return redirect(request.referrer)
+
+@app.route('/edit')
+def edit():
+    user_id = session.get('user_id')
     
-        return redirect(request.referrer)
+    print(user_id)
+
+    return redirect(request.referrer)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(request.referrer)
+
+################################# BLOG PAGES ##################################
 
 @app.route('/blog')
 def blog():
@@ -48,10 +72,10 @@ def blog():
 
 @app.route('/tic-tac-toe')
 def tic_tac_toe():
-    comments = read_comment()[::-1]
+    comments = read_comment()
     user = session.get('user_name')
     user_id = session.get('user_id')
-    return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments , user = user)
+    return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments , user=user )
 
 @app.route('/tic-tac-toe-play')
 def tictactoeplay():
@@ -62,18 +86,15 @@ def tictactoeplay():
 @app.route('/add_comment' , methods =["POST"])
 def add_comment():
     new_comment = request.form.get('comment')
-    write_comment(1, new_comment, False)
-    # write_comment(0, new_comment , 'False')
+    user_id = session.get('user_id')
+    print(new_comment)
+    print(user_id)
+    write_comment(user_id, new_comment)
     return redirect ('/tic-tac-toe')
 
 
 ########################## SOCKET CONNECTIONS #######################################################
 
-
-
-
-
-######################## SOCKET CONNECTIONS FOR TIC-TAC-TOE ########################################
 @socketio.on('username')
 def receive_username(username):
     if(len(users) < 2):

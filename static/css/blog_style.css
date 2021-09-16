@@ -64,10 +64,16 @@
     font-size: 16pt;
 }
 
-#login-signup-element{
-    display: flex;
-    justify-content: space-between;
+#login-comment-text{
+    position: absolute;
 }
+
+#login-button {
+    position: relative;
+    left: 150px;
+    top: 10px;
+}
+
 
 #close-window, #signup-close-window {
     color: black;
@@ -78,4 +84,33 @@
 #close-window:hover , #signup-close-window:hover {
     color: white;
     background-color: red;
+}
+
+#new-comment {
+    background-color: rgba(255, 255, 255, 0.900);
+    
+}
+
+#logout-button {
+
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 15px;
+    font-family: 'Press-Start-2P';
+}
+
+#logout-button:hover {
+    background-color: #acfcae;
+    color: black;
+}
+
+#edit-button:hover{
+    background-color: #acfcae;
+    color: black;
+}
+
+.comment-paragraph{
+    display: flex;
+    justify-content: space-between;
 }

@@ -4,7 +4,6 @@
     
 }
 
-
 @font-face {
     font-family: 'sh-pinscher';
     src: url('../fonts/sh-pincher/SHPinscher-Regular.otf');
@@ -93,15 +92,24 @@ section {
 }
 
 .comments {
-        display: flex;
-        flex-direction: column;
-        grid-area: comment;
+    padding: 50px;
+    background-color: rgba(206, 206, 206, 0.836);
+    display: flex;
+    flex-direction: column;
+    grid-area: comment;
         
+}
+
+.logos {
+    background-color: rgba(82, 81, 81, 0.836);
 }
 
 .comment-bar{
     width: 400px;
     height: 80px;
+    background: rgba(255, 255, 255, 0.900);
+    width: 100vh;
+    height: 80px;  
 }
 
 canvas { 
@@ -160,6 +168,10 @@ h2 {
     color: blue;
 }
 
+label {
+    font-size: 18pt;
+}
+
 img {
     width: 200px;
  
@@ -187,7 +199,7 @@ img {
     
 }
 
-.button:hover{
-    background-color: red;
+.button:hover {
+    background-color: #acfcae;
     color: black;
 }

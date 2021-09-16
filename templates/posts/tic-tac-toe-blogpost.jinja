@@ -24,29 +24,36 @@
 </div>
 {% endblock %}
 
-
-
 {% block comments %}
-    <div id="login-signup-element">
-        <button class="button" id='login-button'>login</button>
-        <br>
-        <button class="button" id="signup-button">sign up</button>
-    </div>
-    <hr>
-    <form action="/add_comment" method="POST">
-        <label for="comment"><b> Comment: </b></label>
-        <input class="comment-bar" type="text" name="comment" placeholder="start discussion"><br><br>
         {% if user != None %}
-            <input class="button" id="comment-button" type="submit" value="COMMENT">
+            <hr>
+            <form action="/add_comment" method="POST" id="comment-logout-box">
+                <label for="comment"><b> Comment: </b></label>
+                <input class="comment-bar" type="text" name="comment" placeholder="start discussion"><br><br>
+                <input class="button" id="comment-button" type="submit" value="COMMENT">
+                <a id="logout-button" href="/logout">logout</a>
+            </form>
         {% else %}
-            <p>login in to comment</p>
+            <form action="/add_comment" method="POST">
+                <label for="comment"><b> Comment: </b></label>
+                <input class="comment-bar" type="text" name="comment" placeholder="start discussion" ><br><br>
+            </form>
+            <div id="login-signup-element">
+                <h3 id="login-comment-text">login in to comment</h3>
+                <button class="button" id='login-button'>login</button>    
+            </div>
+            
         {% endif %}
-        
-    </form>
-    {{user}} 
+    <br>
     <div id='new-comment'>
         {% for comment in comments %}
-        <p> {{comment}} </p>
+        <p class="comment-paragraph"> {{comment[0]}} : {{comment[1]}} 
+            {% if comment[0] == user %}
+            <a id="edit-button" href="/edit" >edit</a>
+            {% endif %}
+        </p>
+        
+        <hr>
         {% endfor %}
     </div>
 {% endblock %}

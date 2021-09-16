@@ -18,6 +18,7 @@ def sql_write_comment(query , params):
     cur.close()
     conn.close()
 
+
 def sign_up(query , params):
     conn = psycopg2.connect("dbname=my_blog user = clckwrk")
     cur = conn.cursor()
