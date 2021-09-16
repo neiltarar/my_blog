@@ -100,14 +100,15 @@ const laser = [];
 
 let starshipStartingPoint_x = 45;
 let starshipStartingPoint_y = 68;
-const planet = new Planet(400 , 70 , 25, '#964B00', 0.2)
-const spaceship = new Spaceship(20, 55 , 70 , 0 , 1)
+let planet = new Planet(400 , 70 , 25, '#964B00', 0.2)
+let spaceship = new Spaceship(20, 55 , 70 , 0 , 1)
 
 function draw() {
     context.clearRect(0,0,500,150);
     spaceship.draw()
     spaceship.flame()
-    
+    planet.draw()
+    planet.update()
     for(let i = 0 ; i < laser.length ; i++){
         laser[i].update()
         }
@@ -122,8 +123,7 @@ function draw() {
 function keyUpHandler(e) {
     if(e.keyCode === 32) {
         const laserGun = new LaserGun(starshipStartingPoint_x , starshipStartingPoint_y , 10 ,3 , 'red', 2)
-        laser.push(laserGun)
-            
+        laser.push(laserGun)   
     }
 }
 
