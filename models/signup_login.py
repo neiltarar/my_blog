@@ -20,3 +20,7 @@ def score_save(score, user_id):
 def get_score():
     result = sql_check("SELECT score, username FROM users ORDER BY score DESC LIMIT 1;")
     return result
+
+def get_user_score(user_id):
+    result = sql_select("SELECT score, username FROM users WHERE id= %s;" , [user_id])
+    return result

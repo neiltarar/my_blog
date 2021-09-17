@@ -6,7 +6,7 @@ from decouple import config
 
 from models.tictactoe_logic import *
 from models.comments import delete_comment, read_comment, write_comment, edit_comment
-from models.signup_login import login_check, signup_new_user, score_save, get_score
+from models.signup_login import login_check, signup_new_user, score_save, get_score, get_user_score
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config('FLASK_SECRET_KEY')
@@ -22,14 +22,14 @@ def home():
     high_score_user = scores[0][1]
     return render_template('home.jinja' , user = user , high_score = high_score , high_score_user = high_score_user)
 
-############################# SCORE CAPTURE VIA SOCKET(IO) #################################
+############################# SCORE CAPTURE & SAVE VIA SOCKET(IO) #################################
+
 @socketio.on('score')
 def receive_score(score):
     user_id = session.get('user_id')
-    score_save(score , user_id)
-    print(score)
-    print(user_id)
-
+    user_score = get_user_score(user_id)[0][0]
+    if score > user_score:
+        score_save(score , user_id)
 
 ########################### SIGNUP - LOGIN - LOGOUT HANDLE ########################################
 @app.route('/signup' , methods=["POST"])
