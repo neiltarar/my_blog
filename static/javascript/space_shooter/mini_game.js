@@ -1,10 +1,16 @@
+const score = document.getElementById("score");
+const playButton = document.getElementById("playButton");
+
+let start = 0;
+
 let canvas;
 let context; 
 
 canvas = document.getElementById('minigame');
 context = canvas.getContext("2d");
 
-document.addEventListener("keyup", keyUpHandler, false);
+
+document.addEventListener("keydown" , keyDownHandler, false);
 
 class Planet{
     constructor(x , y , r , color , velocity){
@@ -52,7 +58,7 @@ class LaserGun{
     }
 
     reset() {
-        this.x = spaceshipStartingPoint - 20;
+        this.x = starshipStartingPoint_x;
     }
 
     edge(){
@@ -61,30 +67,30 @@ class LaserGun{
 }
 
 class Spaceship{
-    constructor(x , y , z, velocity, opacity){
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.velocity = velocity;
+    constructor(x1 , y1 , x2, y2 ,x3 ,y3 , opacity){
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.x3 = x3;
+        this.y3 = y3;
         this.opacity = opacity;
     }
     draw(){
-        
         context.beginPath();
-        context.moveTo(this.x,this.y);
-        context.lineTo(this.y-5, this.z);
-        context.lineTo(this.x, this.z+10);
-        context.fillStyle = 'black';
+        context.moveTo(this.x1,this.y1);
+        context.lineTo(this.x2, this.y2);
+        context.lineTo(this.x3, this.y3);
+        context.fillStyle = 'rgb(255, 200, 250)';
         context.fill();
         context.beginPath();
-        context.moveTo(this.x,this.y+6);
-        context.lineTo(this.x-8, this.z-2);
-        context.lineTo(this.x, this.z+4);
+        context.moveTo(this.x1,this.y1-6);
+        context.lineTo(this.x2-40, this.y2-2);
+        context.lineTo(this.x1, this.y3+6);
         context.fillStyle = `rgba(255, 0, 0, ${this.opacity})`;
         context.fill();
     }
     flame(){
-      
         if(this.opacity >= 0 ){
             this.opacity -= 0.09;
             if (this.opacity <= 0){
@@ -95,108 +101,164 @@ class Spaceship{
     }
 }   
 
+// Create an animation frame variable and assign it to undefined.
+let animationFrame 
 
-//let laserGun = new LaserGun(lasergunStartingPoint_x , lasergunStartingPoint_y , 10 ,3 , 'red', 2)
+let starshipStartingPoint_x = 70;
+let starshipStartingPoint_y = 50;
+let lasergunStartingPoint_y = starshipStartingPoint_x;
+let lasergunStartingPoint_x = starshipStartingPoint_y;
+let spaceship = new Spaceship(20, 80 , starshipStartingPoint_y , starshipStartingPoint_x , 20, 55 , 1);
 
-// function draw() {
-//     
-//     spaceship.draw()
-//     spaceship.flame()
-    
-//     planets.forEach(planet => {
-//         planet.draw()
-//         planet.update()
-//         const distance = Math.hypot(laser[0]['x'] - planet['x'] , laser[0]['y'] - planet['y'])
-        
-//     });
+let point = 0;
 
-//     console.log(planets)
-//     // laser.x - planet.x , laser.y - planet.y
-    
-//     const distance = Math.hypot(laser[0]['x'] - planets[0]['x'] , laser[0]['y'] - planets[0]['y'])
-//     //console.log(distance)
-    
-//     for(let i = 0 ; i < laser.length ; i++){
-//         laser[i].update()
-//         };
-    
-//     
-    
-//     if(distance - planets[0]['r'] < 1){
-//         planets.shift();
-//         laser.shift();
-//     };
-    
-//     if(planets[0]['x'] < 0){
-//         planets.shift()
-//     };
-// }
- 
-
+// Populate laser beams and planets to refresh frame create movement
 const laser_array = [];
 const planets = [];
 
-let starshipStartingPoint_x = 45;
-let starshipStartingPoint_y = 68;
-let lasergunStartingPoint_x = starshipStartingPoint_x
-let lasergunStartingPoint_y = starshipStartingPoint_y
-let spaceship = new Spaceship(20, 55 , 70 , 0 , 1)
-
-
 // // Random Planet Spaw Funtion using `Math.floor(Math.random() * (max - min + 1)) + min`
 // // y coordinate between 25 - 175
-// // r (size) between size 10 -25
+// // r (size) between size 10 - 25 (25 = 3pt , 10 = 10pt)
 // // time interval between 1000 - 3000
 function spawnPlanet() {
     setInterval(() => {
+        const colorVariable1 = Math.floor(Math.random() * (256))
+        const colorVariable2 = Math.floor(Math.random() * (256))
+        const colorVariable3 = Math.floor(Math.random() * (256))
         const x = 600;
         const y = Math.floor(Math.random() * 151) + 25;
         const r = Math.floor(Math.random() * 16) + 10;
-        const color = '#964B00';
-        const velocity = 1;
+        const color = `rgb(${colorVariable1} , ${colorVariable2} , ${colorVariable3})`;
+        const velocity = Math.floor(Math.random() * (6 -1 +1)) +1;
 
         planets.push(new Planet(x , y , r , color , velocity));
 
     } , Math.floor(Math.random() * 1999) + 1000)
 };
 
-spawnPlanet();
 
 function animate() {
-    requestAnimationFrame(animate)
+    score.innerText = `Score:${point}`;
+    animationFrame = requestAnimationFrame(animate)
     context.clearRect(0,0,600,200);
     spaceship.draw();
     spaceship.flame();
-
-    laser_array.forEach(laser => {
-        laser.update()
-    })
+    laser_array.forEach((laser , index) => {
+        laser.update();
+        // clearing the laser object when it leaves the canvas to free space in the memory.
+        if(laser.x > 600){
+            setTimeout(() => {
+                laser_array.splice(index , 1);
+            }, 0);
+        };
+    });
     
-    planets.forEach((planet)=>{
+    planets.forEach((planet , index)=>{
         planet.update()
-        let distance = Math.hypot(laser_array[0]['x'] - planet['x'] , laser_array[0]['y'] - planet['y'])
-        console.log(distance)
-        if(distance - planet['r'] < 1){
-                    planets.shit();
-                    laser.shift();
-                };
+        let distance1 = Math.hypot(spaceship.x1 - planet.x, spaceship.y1 - planet.y)
+        let distance2 = Math.hypot(spaceship.x2 - planet.x, spaceship.y2 - planet.y)
+        let distance3 = Math.hypot(spaceship.x3 - planet.x, spaceship.y3 - planet.y)
+        // Detect collision
+        if(distance1 - planet.r < 1 || distance2 - planet.r < 1 || distance3 - planet.r < 1){
+            // Freeze the animation on the frame where the laser touches the spaceship
+            cancelAnimationFrame(animationFrame);
+            context.font = "50px Press-Start-2P";
+            context.fillStyle = 'red';
+            context.texAlign = "center";
+            context.fillText("GAME OVER!",  50, 120);
+        };
+
+        laser_array.forEach((laser , laserIndex) => {
+            let distance = Math.hypot(laser.x - planet.x , laser.y - planet.y)
+
+            // Detect when and which planet the laser hits:
+            if(distance - planet.r < 1){
+                if(planet.r < 15){
+                    point += 10;
+                }else if(planet.r > 15 && planet.r < 20){
+                    point += 5;
+                }else{
+                    point += 3;
+                }
+                // Avoid the screen flashing when remove objects from the array/frame
+                setTimeout(() => {
+                    planets.splice(index, 1);
+                    laser_array.splice(laserIndex, 1);
+                } , 0);
+            };
+        });
+        
+        // clearing the planet object when it leaves the canvas to free space in the memory.
+        if(planet.x < 0){
+            setTimeout(() => {
+                planets.splice(index , 1);
+            }, 0);
+        };
     });
 
-    if((laser_array[0]['x'] > 600)){
-            // clearing the laser object when it leaves the canvas to free space in the memory.
-            laser_array.shift()
-            }
 };
     
 
-function keyUpHandler(e) {
+// function keyUpHandler(e) {
+//     if(e.keyCode === 32) {
+//         laser_array.push(new LaserGun(lasergunStartingPoint_x , lasergunStartingPoint_y , 10 ,3 , 'red', 2))   
+//     }
+// }
+
+function keyDownHandler(e) {
     if(e.keyCode === 32) {
         laser_array.push(new LaserGun(lasergunStartingPoint_x , lasergunStartingPoint_y , 10 ,3 , 'red', 2))   
     }
-}
+    if(e.keyCode === 68){
+        spaceship.x1 += 3;
+        spaceship.x2 += 3;
+        spaceship.x3 += 3;
+        lasergunStartingPoint_x += 3;
 
-animate()
+        if(spaceship.x1 >= 550){
+            spaceship.x1 -= 3;
+            spaceship.x2 -= 3;
+            spaceship.x3 -= 3;
+            lasergunStartingPoint_x -= 3
+        };
+    }else if(e.keyCode === 65){
+        spaceship.x1 -= 3;
+        spaceship.x2 -= 3;
+        spaceship.x3 -= 3;
+        lasergunStartingPoint_x -= 3;
 
+        if(spaceship.x1 <= 0){
+            spaceship.x1 += 3;
+            spaceship.x2 += 3;
+            spaceship.x3 += 3;
+            lasergunStartingPoint_x += 3;
+        };
+    }else if(e.keyCode === 87){
+        spaceship.y1 -= 3;
+        spaceship.y2 -= 3;
+        spaceship.y3 -= 3;
+        lasergunStartingPoint_y -= 3;
 
+        if(spaceship.y3 <= 0){
+            spaceship.y1 += 3;
+            spaceship.y2 += 3;
+            spaceship.y3 += 3;
+            lasergunStartingPoint_y += 3;
+        };
+    }else if(e.keyCode === 83){
+        spaceship.y1 += 3;
+        spaceship.y2 += 3;
+        spaceship.y3 += 3;
+        lasergunStartingPoint_y += 3;
 
-    
+        if(spaceship.y3 >= 175){
+            spaceship.y1 -= 3;
+            spaceship.y2 -= 3;
+            spaceship.y3 -= 3;
+            lasergunStartingPoint_y -= 3;
+        };
+    }
+};
+
+spawnPlanet();
+animate();
