@@ -1,0 +1,14 @@
+{% extends "base.jinja" %}
+
+
+{% block main %}
+
+<p>{{comment}}</p>
+<form action="/edit-save" method="POST">
+    <input type="hidden" name='url' value="{{url}}">
+    <input type="hidden" name='comment-id' value="{{comment_id}}">
+    <input type="text" name="edited-comment" placeholder="edit comment">
+    <button type="submit" class="button" >edit</button>
+</form>
+
+{% endblock %}

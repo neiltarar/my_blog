@@ -114,3 +114,34 @@
     display: flex;
     justify-content: space-between;
 }
+
+.button {
+
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 15px;
+    font-family: 'Press-Start-2P';
+    
+}
+
+#edit-box{
+    width: auto;
+    height: auto;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: -55px;
+    bottom: -165px;
+    background-color: rgba(99, 97, 224, 0.9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
+#edit-box.show{
+    display: flex;
+}

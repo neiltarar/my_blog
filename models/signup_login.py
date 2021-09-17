@@ -2,10 +2,10 @@
 
 from logging import log
 import psycopg2 as data
-from database import sign_up, login
+from database import login, sql_write
 
 def signup_new_user(email, username , password_hash):
-    sign_up("INSERT INTO users (email, username, password_hash) VALUES (%s , %s, %s)",
+    sql_write("INSERT INTO users (email, username, password_hash) VALUES (%s , %s, %s)",
     [email, username, password_hash]) 
 
 def login_check(email):

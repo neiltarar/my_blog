@@ -5,7 +5,7 @@ import bcrypt
 from decouple import config
 
 from models.tictactoe_logic import *
-from models.comments import read_comment , write_comment
+from models.comments import delete_comment, read_comment, write_comment, edit_comment
 from models.signup_login import login_check, signup_new_user
 
 app = Flask(__name__)
@@ -51,19 +51,14 @@ def login():
             
             return redirect(request.referrer)
 
-@app.route('/edit')
-def edit():
-    user_id = session.get('user_id')
-    
-    print(user_id)
-
-    return redirect(request.referrer)
-
-@app.route('/logout')
+@app.route('/logout' , methods=["POST"])
 def logout():
-    session.clear()
-    return redirect(request.referrer)
-
+    message = request.form.get('logout')
+    if message == 'logout':
+        session.clear()
+        return redirect(request.referrer)
+    else:
+        return redirect(request.referrer)
 ################################# BLOG PAGES ##################################
 
 @app.route('/blog')
@@ -72,26 +67,56 @@ def blog():
 
 @app.route('/tic-tac-toe')
 def tic_tac_toe():
-    comments = read_comment()
+    url = request.url.split("/")[::-1][0]
+    comments = read_comment(url)
     user = session.get('user_name')
-    user_id = session.get('user_id')
     return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments , user=user )
 
 @app.route('/tic-tac-toe-play')
 def tictactoeplay():
     return render_template('posts/tic-tac-toe.jinja')
 
+@app.route('/robot-arm')
+def robot_arm():
+    url = request.url.split("/")[::-1][0]
+    comments = read_comment(url)
+    user = session.get('user_name')
+    return render_template('posts/robot-arm.jinja' , comments = comments , user=user )
+
 ########################## HANDLE POST/GET REQUESTS ################################################
 
 @app.route('/add_comment' , methods =["POST"])
 def add_comment():
+    url = request.referrer.split("/")[::-1][0]
     new_comment = request.form.get('comment')
     user_id = session.get('user_id')
-    print(new_comment)
-    print(user_id)
-    write_comment(user_id, new_comment)
-    return redirect ('/tic-tac-toe')
+    
+    write_comment(user_id, new_comment , url)
+    return redirect (request.referrer)
 
+@app.route('/edit-save', methods=["POST"])
+def edit_save():
+    comment_id = request.form.get('comment-id')
+    comment = request.form.get('edited-comment')
+    user_id = request.form.get('user_id')
+    url = request.form.get('url')
+    user_id = session.get('user_id')
+    edit_comment(user_id, comment_id, comment)
+    return redirect(f'/{url}')
+
+@app.route('/edit' , methods = ['POST'])
+def edit():
+    url = request.referrer.split("/")[::-1][0]    
+    comment_id = request.form.get('comment-id')
+    comment = request.form.get('comment')
+    return render_template('/edit.jinja', comment_id = comment_id, comment = comment, url = url)
+
+
+@app.route('/delete', methods=["POST"])
+def delete():
+    comment_id = request.form.get("comment-id")
+    delete_comment(comment_id)
+    return redirect (request.referrer)
 
 ########################## SOCKET CONNECTIONS #######################################################
 
