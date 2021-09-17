@@ -18,10 +18,10 @@ def sql_write(query , params):
     cur.close()
     conn.close()
 
-def login(query , params):
+def sql_check(query):
     conn = psycopg2.connect("dbname=my_blog user = clckwrk")
     cur = conn.cursor()
-    cur.execute(query , params)
+    cur.execute(query)
     results = cur.fetchall()
     cur.close()
     conn.close()

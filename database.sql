@@ -2,6 +2,15 @@ DROP TABLE IF EXISTS comments CASCADE;
 
 DROP TABLE IF EXISTS users CASCADE;
 
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY ,
+	game VARCHAR(30),
+	score INTEGER,
+    email VARCHAR(50) ,  
+    username VARCHAR(50), 
+    password_hash VARCHAR(100)
+    );
+
 CREATE TABLE comments (
 	id SERIAL PRIMARY KEY,
 	user_id INTEGER,
@@ -12,9 +21,5 @@ CREATE TABLE comments (
 		REFERENCES users(id)
 	);
 
-CREATE TABLE users (
-    user_id SERIAL PRIMARY KEY , 
-    email VARCHAR(50) ,  
-    username VARCHAR(50), 
-    password_hash VARCHAR(100)
-    );
+
+

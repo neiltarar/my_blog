@@ -6,7 +6,7 @@ from decouple import config
 
 from models.tictactoe_logic import *
 from models.comments import delete_comment, read_comment, write_comment, edit_comment
-from models.signup_login import login_check, signup_new_user
+from models.signup_login import login_check, signup_new_user, score_save, get_score
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config('FLASK_SECRET_KEY')
@@ -14,9 +14,20 @@ socketio = SocketIO(app)
 
 ############################ HOME PAGE ################################
 
-@app.route('/')
+@app.route('/' , methods=["GET" ,"POST"])
 def home():
-    return render_template('home.jinja')
+    user = session.get('user_name')
+    scores = get_score()
+    high_score = scores[0][0]
+    high_score_user = scores[0][1]
+    return render_template('home.jinja' , user = user , high_score = high_score , high_score_user = high_score_user)
+
+@socketio.on('score')
+def receive_score(score):
+    user_id = session.get('user_id')
+    score_save(score , user_id)
+    print(score)
+    print(user_id)
 
 
 ########################### SIGNUP - LOGIN - LOGOUT HANDLE ########################################
@@ -33,19 +44,19 @@ def signup():
 def login():
     email = request.form.get('e-mail')
     password = request.form.get('psw')
-
+    print(login_check(email)[0])
     ###### Handle wrong password entry
     if login_check(email) == []:
         return redirect(request.referrer)
     else:
         result = login_check(email)[0]
-        password_hash = result[3]
+        password_hash = result[5]
         valid = bcrypt.checkpw(password.encode(), password_hash.encode())
         if valid == False:
             return redirect(request.referrer)
         else:
             user_id = result[0]
-            user_name = result[2]
+            user_name = result[4]
             session['user_id'] = user_id
             session['user_name'] = user_name
             

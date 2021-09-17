@@ -1,5 +1,15 @@
 const score = document.getElementById("score");
-const playButton = document.getElementById("playButton");
+const loginButton = document.getElementById("login");
+const modal = document.getElementById('id01');
+const signupWindow = document.getElementById('signup-window');
+const signupButton = document.getElementById('signup-button');
+const closeButton = document.getElementById('close-window');
+const signupCloseButton = document.getElementById('signup-close-window');
+const password = document.getElementById('password');
+const confirmPassword = document.getElementById('confirm-password');
+const saveScoreButton = document.getElementById('save-score-button');
+
+const socket = io();
 
 let start = 0;
 
@@ -166,6 +176,7 @@ function animate() {
             context.fillStyle = 'red';
             context.texAlign = "center";
             context.fillText("GAME OVER!",  50, 120);
+            socket.emit('score', point);
         };
 
         laser_array.forEach((laser , laserIndex) => {
@@ -262,3 +273,39 @@ function keyDownHandler(e) {
 
 spawnPlanet();
 animate();
+
+loginButton.addEventListener('click' , (event) => {
+    modal.classList.add('show')
+});
+
+function showEditBox() {
+    console.log('pressed')
+    editBox.classList.add('show')
+};
+
+closeButton.addEventListener('click' , (event) => {
+        modal.classList.remove('show')
+});
+
+signupButton.addEventListener('click' , (event) =>{
+    signupWindow.classList.add('show')
+    console.log('pressed')
+    modal.classList.remove('show')
+});
+
+signupCloseButton.addEventListener('click' , (event)=>{
+    signupWindow.classList.remove('show')
+});
+
+
+
+function validatePassword(){
+    if(password.value !== confirmPassword.value){
+        confirmPassword.setCustomValidity("Passwords Don't Match");
+  } else {
+    confirmPassword.setCustomValidity('');
+  }
+}
+
+password.onchange = validatePassword;
+confirmPassword.onkeyup = validatePassword;
