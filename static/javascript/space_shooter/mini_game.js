@@ -34,7 +34,6 @@ class Planet{
     draw(){
         context.beginPath();
         context.arc(this.x, this.y, this.r, 0, Math.PI*2, true);
-        // brown color code: '#964B00'
         context.fillStyle = this.color;
         context.fill();
     }
@@ -139,7 +138,7 @@ function spawnPlanet() {
         const y = Math.floor(Math.random() * 151) + 25;
         const r = Math.floor(Math.random() * 16) + 10;
         const color = `rgb(${colorVariable1} , ${colorVariable2} , ${colorVariable3})`;
-        const velocity = Math.floor(Math.random() * (6 -1 +1)) +1;
+        const velocity = Math.floor(Math.random() * (10-1 +1)) +1;
 
         planets.push(new Planet(x , y , r , color , velocity));
 
@@ -185,11 +184,11 @@ function animate() {
             // Detect when and which planet the laser hits:
             if(distance - planet.r < 1){
                 if(planet.r < 15){
-                    point += 10;
+                    point += 10 * planet.velocity;
                 }else if(planet.r > 15 && planet.r < 20){
-                    point += 5;
+                    point += 5 * planet.velocity;
                 }else{
-                    point += 3;
+                    point += 3 * planet.velocity;
                 }
                 // Avoid the screen flashing when remove objects from the array/frame
                 setTimeout(() => {
