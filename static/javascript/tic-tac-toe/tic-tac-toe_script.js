@@ -86,15 +86,15 @@ socket.on('message' , function(data) {
                 cell.textContent = data[1];
                 //cell.removeEventListener("click")
                 swapSides()
-                socket.on('one_move' , function(msg){
+                // socket.on('one_move' , function(msg){
                     
-                    if(msg === data[1]){
-                        console.log('my move')
-                        cell.removeEventListener("click")
-                    } else {
-                        cell.addEventListener("click" , clickManager , {once : true})
-                    }
-                })
+                //     if(msg === data[1]){
+                //         console.log('my move')
+                //         cell.removeEventListener("click")
+                //     } else {
+                //         cell.addEventListener("click" , clickManager , {once : true})
+                //     }
+                // })
             }
         }
     }

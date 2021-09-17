@@ -22,6 +22,7 @@ def home():
     high_score_user = scores[0][1]
     return render_template('home.jinja' , user = user , high_score = high_score , high_score_user = high_score_user)
 
+############################# SCORE CAPTURE VIA SOCKET(IO) #################################
 @socketio.on('score')
 def receive_score(score):
     user_id = session.get('user_id')

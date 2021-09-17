@@ -60,6 +60,7 @@ a:hover {
 } 
 
 .main {
+    height: 100vh;
     font-size: 15pt;
     display: flex;
     flex-direction: column;
