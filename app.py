@@ -1,3 +1,4 @@
+from datetime import date
 from flask import Flask, render_template, redirect, request, session
 from flask_socketio import SocketIO, send, emit
 import os
@@ -11,6 +12,11 @@ from models.signup_login import login_check, signup_new_user, score_save, get_sc
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config('FLASK_SECRET_KEY')
 socketio = SocketIO(app)
+
+####################### GET CURRENT DATE ####################################
+
+today = date.today().strftime("%d-%m-%Y")
+print(today)
 
 ############################ HOME PAGE ################################
 
@@ -32,6 +38,7 @@ def receive_score(score):
         score_save(score , user_id)
 
 ########################### SIGNUP - LOGIN - LOGOUT HANDLE ########################################
+
 @app.route('/signup' , methods=["POST"])
 def signup():
     email = request.form.get('email')

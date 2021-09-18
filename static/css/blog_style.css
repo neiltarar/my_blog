@@ -88,7 +88,7 @@
 
 #new-comment {
     background-color: rgba(255, 255, 255, 0.900);
-    
+    font-size: 16pt;
 }
 
 #logout-button {
@@ -113,6 +113,8 @@
 .comment-paragraph{
     display: flex;
     justify-content: space-between;
+    padding-left: 30px;
+    padding-top: 15px;
 }
 
 .button {
@@ -144,4 +146,31 @@
 
 #edit-box.show{
     display: flex;
+}
+
+.logout-button{
+    position: relative;
+    left: 150px;
+}
+
+#comment-button{
+    position: absolute;
+}
+
+.a{
+    background-color: transparent;
+    font-size: 7pt;
+    border: none;
+    color: blue;
+    padding: 15px 15px;
+    font-family: 'Press-Start-2P';
+}
+
+.a:hover{
+    color: rgb(128, 128, 250);
+}
+
+.edit-delete-box{
+    display: flex;
+    padding-left: 30px;
 }

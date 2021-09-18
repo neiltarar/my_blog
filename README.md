@@ -1,16 +1,12 @@
-# Tic-Tac-Toe
-## First GA Project:
+# Personal Blog - Website
+## Second GA Project:
 <br><br/>
-![mock_image](./game_mock_image/mock.png)
+![mock_image](./static/images/mock_images/my_blog/my_blog_main_mock.png)
 <br><br/>
 # Dependencies:
 
-- flask-socketio
-- Flask
-- socketio JavaScript Library 
-
-
-    - https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js
+- For full list please check [here](./requirements.txt)
+- https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js
 <br> <br/>
 
 ### Installation of dependencies:
@@ -18,30 +14,36 @@
 Please intall the adviced versions, there are some backwards compatibility issues with SocketIO.
 <br>
 
-- `pip install -r requirements.txt`
+`pip install -r requirements.txt`
 
 <br><br/>
-# Gameplay
+# Overlook
 
-The game runs on Flask server wrapped by socketio using Python socketio library. I used an apache server to reverse proxy to the flask server and port forwarded it to the internet on [www.ga-project1.duckdns.org](http://www.ga-project1.duckdns.org/). 
+After completing this project I will be serving this as my personal website on https://neil-tarar.com
+For the demonstration purposes I will be serving the site on port 80 without an encryption key on http://neil-tarar.com
 
-At this stage server doesn't create individual rooms and broadcast each message
-to all connected clients. 
+The site runs on Flask server, some sections are using [Flask-SocketIO](https://flask-socketio.readthedocs.io/en/latest/). I used an apache server to reverse proxy to the flask server and port forwarded it to the internet on http://neil-tarar.com. 
 
-When the games ends with a win or draw a restart page pops up. If one player presses
-the 'Restart' button, game restarts for both parties. In addition everyone connected to 
-the server can watch the game being played and send a message to the main screen.
+I will be sharing my projects on the [blog](http://neil-tarar.com/blog) section. I designed the website to reflect my personality and I wrote a mini game to be put on the [main page](http://neil-tarar.com). By this way I am hoping to make the website more engaging. I have been inspired by good old [Astroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) game which I spent countless hours playing on my Atari!  
 
-![restart_image](./game_mock_image/restart.png) 
+![mini_game_Mock_image](./static/images/mock_images/my_blog/space_shooter_mock.png) 
 
-<br><br/>
+If users login with their accounts their scores will be captured automatically when the game ends. The Highest score is visible on the main page to showcase the glory of the score owner. 
+
+<p align="center" width="100%">
+    <img width="33%" src="./static/images/mock_images/my_blog/login_mock.png?style=centerme">
+</p>
+
+<br>
+
+## Blog Comments
+
+
+
 # Future Improvements
 
-Minor bug-fixes such as; players can overwrite each other's play. I am planning to re-write the game logic on the server side with Python to overcome this issue.
+Detect if the username is taken. Add more games to the main page. 
 
-Create individual rooms and broadcast to a targeted group of players and limit each room to two players. Add a scoreboard and give the players the option to choose a character token to mark the board with instead of an "X" or "O". 
-
-Port forward the page on port:443 with an SSL key. 
 <br><br/>
 # What I Learned
 I spent majority of my time on researching and learning how to use Flask Socketio library as well as Apache Server settings. I learned how to create individual rooms to broadcast to a targeted audience however I didn't have enough time to implement this before the presentation day.  

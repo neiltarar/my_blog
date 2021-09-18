@@ -27,15 +27,18 @@
         {# if a user is NOT logged in #}
         {% if user != None %}
             <hr>
-            <form action="/add_comment" method="POST" id="comment-logout-box">
-                <label for="comment"><b> Comment: </b></label>
-                <input class="comment-bar" type="text" name="comment" placeholder="start discussion"><br><br>
-                <input class="button" id="comment-button" type="submit" value="COMMENT">
-            </form>
-            <form action="/logout" method="POST">
-                    <input type="hidden" name="logout" value="logout">
-                    <button class="button" type=submit>logout</button>
-            </form>
+            
+                <form action="/add_comment" method="POST" id="comment-logout-box">
+                    <label for="comment"><b> Comment: </b></label>
+                    <input class="comment-bar" type="text" name="comment" placeholder="start discussion"><br><br>
+                    <input class="button" id="comment-button" type="submit" value="COMMENT">
+                </form>
+            
+                <form action="/logout" method="POST" class="logout-button">
+                        <input type="hidden" name="logout" value="logout">
+                        <button class="button" type=submit>logout</button>
+                </form>
+            
         {# if a user IS logged in #}
         {% else %}
             <form action="/add_comment" method="POST">
@@ -52,15 +55,17 @@
         {% for comment in comments %}
             <p class="comment-paragraph"> {{comment[2]}} : {{comment[1]}} 
             {% if comment[2] == user %}
-            <form action="/edit" method="POST">
-                <input type="hidden" name='comment' value="{{comment[1]}}">
-                <input type="hidden" name='comment-id' value="{{comment[0]}}">
-                <button type="submit" class="button" >edit</button>
-            </form>
-            <form action="/delete" method="POST">
-                <input type="hidden" name='comment-id' value="{{comment[0]}}">
-                <button type="submit" class="button" >delete</button>
-            </form>
+            <div class="edit-delete-box">
+                <form action="/edit" method="POST">
+                    <input type="hidden" name='comment' value="{{comment[1]}}">
+                    <input type="hidden" name='comment-id' value="{{comment[0]}}">
+                    <button type="submit" class="a" >edit</button>
+                </form>
+                <form action="/delete" method="POST">
+                    <input type="hidden" name='comment-id' value="{{comment[0]}}">
+                    <button type="submit" class="a" >delete</button>
+                </form>
+            </div>
             {% endif %}
         </p>
         <hr>
