@@ -20,12 +20,12 @@ Please intall the adviced versions, there are some backwards compatibility issue
 
 # Overlook
 
-After completing this project I will be serving this as my personal website on https://neil-tarar.com
-For the demonstration purposes I will be serving the site on port 80 without an encryption key on http://neil-tarar.com
+After completing this project I will be serving this as my personal website on https://www.neil-tarar.com
+For the demonstration purposes I will be serving the site on port 80 without an encryption key on http://www.neil-tarar.com
 
-The site runs on Flask server, some sections are using [Flask-SocketIO](https://flask-socketio.readthedocs.io/en/latest/). I used an apache server to reverse proxy to the flask server and port forwarded it to the internet on http://neil-tarar.com. 
+The site runs on Flask server, some sections are using [Flask-SocketIO](https://flask-socketio.readthedocs.io/en/latest/). I used an apache server to reverse proxy to the flask server and port forwarded it to the internet on http://www.neil-tarar.com. 
 
-I will be sharing my projects on the [blog](http://neil-tarar.com/blog) section. I designed the website to reflect my personality and I wrote a mini game to be put on the [main page](http://neil-tarar.com). By this way I am hoping to make the website more engaging. I have been inspired by good old [Astroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) game which I spent countless hours playing on my Atari!  
+I will be sharing my projects on the [blog](http://neil-tarar.com/blog) section. I designed the website to reflect my personality and I wrote a mini game to be put on the [main page](http://www.neil-tarar.com/). By this way I am hoping to make the website more engaging. I have been inspired by good old [Astroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) game which I spent countless hours playing on my Atari!  
 
 ![mini_game_Mock_image](./static/images/mock_images/my_blog/space_shooter_mock.png) 
 
