@@ -284,3 +284,10 @@ img {
 #save-score-button.show{
     display: block;
 }
+
+.instructions{
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 10px;
+    padding-bottom: 40px;
+}
