@@ -5,8 +5,8 @@ import psycopg2 as data
 from database import sql_check, sql_write , sql_select
 
 def signup_new_user(email, username , password_hash):
-    sql_write("INSERT INTO users (email, username, password_hash) VALUES (%s , %s, %s)",
-    [email, username, password_hash]) 
+    sql_write("INSERT INTO users (email, username, password_hash, score) VALUES (%s , %s, %s, %s)",
+    [email, username, password_hash, 0]) 
 
 def login_check(email):
     results = sql_select("SELECT * FROM users WHERE email= %s" , [email])
