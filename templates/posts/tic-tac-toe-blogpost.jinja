@@ -21,6 +21,9 @@
 <div>
     You can play the game <a href="./tic-tac-toe-play">here</a>
 </div>
+<div>
+    <img src="../static/images/mock_images/tic-tac-toe/mock.png" style="width: auto;" alt="game mock image">
+</div>
 {% endblock %}
 
 {% block comments %}
@@ -53,7 +56,7 @@
     <br>
     <div id='new-comment'>
         {% for comment in comments %}
-            <p class="comment-paragraph"> {{comment[2]}} : {{comment[1]}} 
+            <p class="comment-paragraph">{{comment[3]}} - {{comment[2]}} : {{comment[1]}} 
             {% if comment[2] == user %}
             <div class="edit-delete-box">
                 <form action="/edit" method="POST">

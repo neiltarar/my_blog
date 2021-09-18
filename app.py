@@ -13,11 +13,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = config('FLASK_SECRET_KEY')
 socketio = SocketIO(app)
 
-####################### GET CURRENT DATE ####################################
-
-today = date.today().strftime("%d-%m-%Y")
-print(today)
-
 ############################ HOME PAGE ################################
 
 @app.route('/' , methods=["GET" ,"POST"])
@@ -88,6 +83,7 @@ def blog():
 def tic_tac_toe():
     url = request.url.split("/")[::-1][0]
     comments = read_comment(url)
+    print(comments)
     user = session.get('user_name')
     return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments , user=user )
 
@@ -99,6 +95,7 @@ def tictactoeplay():
 def robot_arm():
     url = request.url.split("/")[::-1][0]
     comments = read_comment(url)
+    print(comments)
     user = session.get('user_name')
     return render_template('posts/robot-arm.jinja' , comments = comments , user=user )
 
@@ -106,21 +103,26 @@ def robot_arm():
 
 @app.route('/add_comment' , methods =["POST"])
 def add_comment():
+    ####################### GET CURRENT DATE ####################################
+    today = date.today().strftime("%d-%m-%Y")
+    
     url = request.referrer.split("/")[::-1][0]
     new_comment = request.form.get('comment')
     user_id = session.get('user_id')
-    
-    write_comment(user_id, new_comment , url)
+    write_comment(user_id, new_comment , url , today)
     return redirect (request.referrer)
 
 @app.route('/edit-save', methods=["POST"])
 def edit_save():
+    ####################### GET CURRENT DATE ####################################
+    today = date.today().strftime("%d-%m-%Y")
+
     comment_id = request.form.get('comment-id')
     comment = request.form.get('edited-comment')
     user_id = request.form.get('user_id')
     url = request.form.get('url')
     user_id = session.get('user_id')
-    edit_comment(user_id, comment_id, comment)
+    edit_comment(user_id, comment_id, comment, today)
     return redirect(f'/{url}')
 
 @app.route('/edit' , methods = ['POST'])

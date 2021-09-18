@@ -14,9 +14,10 @@
 Please intall the adviced versions, there are some backwards compatibility issues with SocketIO.
 <br>
 
-`pip install -r requirements.txt`
+```pip install -r requirements.txt```
 
-<br><br/>
+<br>
+
 # Overlook
 
 After completing this project I will be serving this as my personal website on https://neil-tarar.com
@@ -28,7 +29,24 @@ I will be sharing my projects on the [blog](http://neil-tarar.com/blog) section.
 
 ![mini_game_Mock_image](./static/images/mock_images/my_blog/space_shooter_mock.png) 
 
-If users login with their accounts their scores will be captured automatically when the game ends. The Highest score is visible on the main page to showcase the glory of the score owner. 
+If users login with their accounts their scores will be captured automatically when the game ends. 
+
+Code on server end:
+```python
+@socketio.on('score')
+    def receive_score(score):
+    user_id = session.get('user_id')
+    user_score = get_user_score(user_id)[0][0]
+    if score > user_score:
+    score_save(score , user_id)
+```
+Code to send the score from JavaScript
+```javascript
+socket.emit('score', point);
+```
+`.emit` method allows you to name the message manually, in my case I named it `score` .
+
+Highest score is visible on the main page to showcase the glory of the score owner. 
 
 <p align="center" width="100%">
     <img width="33%" src="./static/images/mock_images/my_blog/login_mock.png?style=centerme">
@@ -38,7 +56,21 @@ If users login with their accounts their scores will be captured automatically w
 
 ## Blog Comments
 
+![blog_comment_mock](./static/images/mock_images/my_blog/blog_comment_mock.png)
 
+When logged in users can edit and delete their own comments.  
+
+<br>
+
+# DATABASE:
+
+Website uses two databases, you can see the structure [here](./database.sql) .
+
+<br>
+### Comments Table:
+<br>
+
+![comments_sql_mock](./static/images/mock_images/my_blog/comments_sql_mock.png)
 
 # Future Improvements
 

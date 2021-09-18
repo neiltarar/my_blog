@@ -16,6 +16,7 @@ CREATE TABLE comments (
 	user_id INTEGER,
 	comment VARCHAR(400),
 	post VARCHAR(50),
+	date VARCHAR(20),
 	CONSTRAINT no_login 
 		FOREIGN KEY(user_id)
 		REFERENCES users(id)
