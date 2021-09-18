@@ -29,6 +29,8 @@ I will be sharing my projects on the [blog](http://neil-tarar.com/blog) section.
 
 ![mini_game_Mock_image](./static/images/mock_images/my_blog/space_shooter_mock.png) 
 
+The game is written drawn on [HTML canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) and the logic is written in JavaScript.
+
 If users login with their accounts their scores will be captured automatically when the game ends. 
 
 Code on server end:
@@ -67,15 +69,23 @@ When logged in users can edit and delete their own comments.
 Website uses two databases, you can see the structure [here](./database.sql) .
 
 <br>
+
 ### Comments Table:
+
 <br>
 
 ![comments_sql_mock](./static/images/mock_images/my_blog/comments_sql_mock.png)
 
+### Users Table:
+
+<br>
+
+![comments_sql_mock](./static/images/mock_images/my_blog/users_sql_mock.png)
+
 # Future Improvements
 
-Detect if the username is taken. Add more games to the main page. 
+Detect if the username is taken. Add more games to the main page and randomly. Improve the over looks and design. Serve it on port 443.  
 
 <br><br/>
 # What I Learned
-I spent majority of my time on researching and learning how to use Flask Socketio library as well as Apache Server settings. I learned how to create individual rooms to broadcast to a targeted audience however I didn't have enough time to implement this before the presentation day.  
+I learnt more front end technologies than back end in this project. Primarily HTML canvas was the biggest learning curve, and I enjoyed it more than I thought that I would. 
