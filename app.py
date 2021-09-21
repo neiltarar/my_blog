@@ -28,6 +28,7 @@ def home():
 @socketio.on('score')
 def receive_score(score):
     user_id = session.get('user_id')
+    print(user_id)
     user_score = get_user_score(user_id)[0][0]
     if score > user_score:
         score_save(score , user_id)
@@ -47,7 +48,7 @@ def signup():
 def login():
     email = request.form.get('e-mail')
     password = request.form.get('psw')
-    print(login_check(email)[0])
+   
     ###### Handle wrong password entry
     if login_check(email) == []:
         return redirect(request.referrer)
@@ -83,7 +84,6 @@ def blog():
 def tic_tac_toe():
     url = request.url.split("/")[::-1][0]
     comments = read_comment(url)
-    print(comments)
     user = session.get('user_name')
     return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments , user=user )
 
@@ -95,7 +95,6 @@ def tictactoeplay():
 def robot_arm():
     url = request.url.split("/")[::-1][0]
     comments = read_comment(url)
-    print(comments)
     user = session.get('user_name')
     return render_template('posts/robot-arm.jinja' , comments = comments , user=user )
 
@@ -114,7 +113,6 @@ def add_comment():
 
 @app.route('/edit-save', methods=["POST"])
 def edit_save():
-    ####################### GET CURRENT DATE ####################################
     today = date.today().strftime("%d-%m-%Y")
 
     comment_id = request.form.get('comment-id')

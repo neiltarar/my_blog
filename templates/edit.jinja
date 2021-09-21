@@ -2,7 +2,7 @@
 
 
 {% block main %}
-
+<div class="edit-fix">
 <p>{{comment}}</p>
 <form action="/edit-save" method="POST">
     <input type="hidden" name='url' value="{{url}}">
@@ -10,5 +10,5 @@
     <input type="text" name="edited-comment" placeholder="edit comment">
     <button type="submit" class="button" >edit</button>
 </form>
-
+</div>
 {% endblock %}

@@ -40,12 +40,22 @@
         <p> Room is full!</p>
     </div>
     </div>
-    <div class="login">
+    <div class="game-type">
+        <form action="/start-game">
+            <input type="hidden" value="start_new_game">
+            <button type="submit"> START A NEW GAME </button>
+        </form>
+        <form action="/join-game">
+            <input type="hidden" value="join_a_game">
+            <button type="submit"> JOIN A GAME </button>
+        </form>
+    </div>
+    {# <div class="login">
         <div id="login">
             <input id="loginId" placeholder="What is your username">
             <button id="loginButton">Login</button>
         </div>
-    </div>
+    </div> #}
     <div id="message">
         <div id="gameEnd"></div>
         <button id="restart">Restart</button>

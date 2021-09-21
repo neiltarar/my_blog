@@ -160,6 +160,23 @@ input {
     flex-direction: column;
 }
 
+.game-type {
+    width: auto;
+    height: auto;
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: -55px;
+    bottom: -165px;
+    background-color: rgba(99, 97, 224, 0.9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
 #room_full {
     width: auto;
     height: auto;
