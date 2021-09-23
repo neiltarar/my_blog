@@ -8,6 +8,9 @@ const oClass = "O";
 // Winning & Draw condition page had the id of 'message' and it is hidden as the game starts
 const message = document.getElementById("message");
 
+const startNewGameButton = document.getElementById("start_new_game");
+const joinAGame = document.getElementById("join_a_game");
+const roomId = document.getElementById("room_id")
 const cells = document.querySelectorAll('#cell');
 const restartButton = document.getElementById("restart");
 const board = document.getElementById("board");
@@ -17,7 +20,25 @@ const chatButton = document.getElementById("messageButton");
 const chatWrite = document.getElementById("receiveMessage");
 const loginInput = document.getElementById("loginId");
 const loginButton = document.getElementById("loginButton");
-const fullRoom = document.getElementById("room_full")
+const fullRoom = document.getElementById("room_full");
+const gameId = document.getElementById('game-id');
+
+function subString(string) {
+    const subString = string.substring(string.length -10)
+    return subString
+}
+
+startNewGameButton.addEventListener("click" , (event)=> {
+    username = loginInput.value
+    document.getElementById("game-type").style.display = 'none';
+    socket.emit("game_type" , `new_game-${username}`);
+});
+
+joinAGame.addEventListener("click" , (event)=>{
+    username = loginInput.value;
+    document.getElementById("game-type").style.display = 'none';
+    socket.emit("game_type" , `${roomId.value}-${username}`);
+});
 
 const winningRules1 = [
     [0 , 1 , 2],
@@ -72,6 +93,13 @@ startGame();
 
 
 // Listen messages from the server
+socket.on('session_id' , function(data) {
+    gameId.innerHTML = `<h4>${subString(data)}</h4>`
+    console.log(data)
+})
+
+
+
 socket.on('message' , function(data) {
     
     // If one of the players press restart button, restart the game for both parties
@@ -114,12 +142,6 @@ chatBar.addEventListener("keydown", function search(e){
     if(e.keyCode === 13){
         chatButton.click();
     }
-})
-
-loginButton.addEventListener("click", (event)=>{
-    socket.emit('username', loginInput.value);
-    document.getElementById("login").style.display = 'none';
-    
 })
 
 socket.on('private_message', function(msg){

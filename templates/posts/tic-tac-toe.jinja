@@ -12,10 +12,8 @@
     
 {% block main %}
     <p id="header">||||||||   Tic  ||||||  Tac  ||||  Toe  ||</p>
-    <div class="token">
-        <ul id="token">
-          
-        </ul>
+    <div id="game-id">
+        
     </div>
     <div id="boardAndPlayerInfo">
         <div id="playerInfo"></div>
@@ -40,22 +38,16 @@
         <p> Room is full!</p>
     </div>
     </div>
-    <div class="game-type">
-        <form action="/start-game">
-            <input type="hidden" value="start_new_game">
-            <button type="submit"> START A NEW GAME </button>
-        </form>
-        <form action="/join-game">
-            <input type="hidden" value="join_a_game">
-            <button type="submit"> JOIN A GAME </button>
-        </form>
+    <div id="game-type">
+        
+        <input id="loginId" placeholder="What is your username" required = "required" name="user_name">
+        <br>
+        <button type="submit" id="start_new_game"> START A NEW GAME </button>
+        <br>
+        <input type="text" id="room_id" placeholder="Put Room Id Here">
+        <button type="submit" id="join_a_game"> JOIN A GAME </button>
+       
     </div>
-    {# <div class="login">
-        <div id="login">
-            <input id="loginId" placeholder="What is your username">
-            <button id="loginButton">Login</button>
-        </div>
-    </div> #}
     <div id="message">
         <div id="gameEnd"></div>
         <button id="restart">Restart</button>

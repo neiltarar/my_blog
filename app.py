@@ -1,6 +1,6 @@
 from datetime import date
 from flask import Flask, render_template, redirect, request, session
-from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO, join_room, leave_room, send, emit
 import os
 import bcrypt
 from decouple import config
@@ -28,7 +28,6 @@ def home():
 @socketio.on('score')
 def receive_score(score):
     user_id = session.get('user_id')
-    print(user_id)
     user_score = get_user_score(user_id)[0][0]
     if score > user_score:
         score_save(score , user_id)
@@ -87,8 +86,9 @@ def tic_tac_toe():
     user = session.get('user_name')
     return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments , user=user )
 
-@app.route('/tic-tac-toe-play')
+@app.route('/tic-tac-toe-play' , methods=["GET" ,"POST"])
 def tictactoeplay():
+
     return render_template('posts/tic-tac-toe.jinja')
 
 @app.route('/robot-arm')
@@ -102,9 +102,10 @@ def robot_arm():
 
 @app.route('/add_comment' , methods =["POST"])
 def add_comment():
-    ####################### GET CURRENT DATE ####################################
-    today = date.today().strftime("%d-%m-%Y")
     
+    # Get current date 
+    today = date.today().strftime("%d-%m-%Y")
+    # Get blog post url to save it in the database accordingly
     url = request.referrer.split("/")[::-1][0]
     new_comment = request.form.get('comment')
     user_id = session.get('user_id')
@@ -114,7 +115,6 @@ def add_comment():
 @app.route('/edit-save', methods=["POST"])
 def edit_save():
     today = date.today().strftime("%d-%m-%Y")
-
     comment_id = request.form.get('comment-id')
     comment = request.form.get('edited-comment')
     user_id = request.form.get('user_id')
@@ -138,12 +138,27 @@ def delete():
     return redirect (request.referrer)
 
 ########################## SOCKET CONNECTIONS #######################################################
+users = {}
 
+@socketio.on("game_type")
+def game_type(type):
+    type = type.split("-")
+    user_name = type[1]
+    if type[0] == "new_game":
+        game_id = request.sid
+        users[user_name] = game_id
+        emit('session_id' , game_id , room = game_id)
+        print(users)
+    else:
+        game_id = type[0]
+        print(game_id + user_name)
+       
+        
 @socketio.on('username')
 def receive_username(username):
-    if(len(users) < 2):
-        users[username] = request.sid
-        userId = users[username]
+    if len(rooms['users'] < 2):
+        rooms['users'][username] = request.sid
+        userId = rooms['users'][username]
         usernames.append(username)
         length = len(users)
         emit('username', username, broadcast=True)
