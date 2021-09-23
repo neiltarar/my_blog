@@ -138,7 +138,7 @@ def delete():
     return redirect (request.referrer)
 
 ########################## SOCKET CONNECTIONS #######################################################
-users = {}
+games = {}
 
 @socketio.on("game_type")
 def game_type(type):
@@ -146,27 +146,43 @@ def game_type(type):
     user_name = type[1]
     if type[0] == "new_game":
         game_id = request.sid
-        users[user_name] = game_id
+        games[game_id] = [user_name]
         emit('session_id' , game_id , room = game_id)
-        print(users)
+        print(games)
     else:
         game_id = type[0]
-        print(game_id + user_name)
+        for i in games:
+            if game_id == i[-10:] and len(games[i]) == 2:
+                user_id = request.sid
+                emit('session_id' , "Room Is Full!!!" , room = user_id)
+            elif game_id == i[-10:]:
+                user_id = request.sid
+                print(user_id)
+                games[i].append(user_name+'-'+user_id)
+                emit('session_id' , game_id , room = user_id)
+                print(games)
+            else:
+                user_id = request.sid
+                emit('session_id' , "Room Doesn't Exist, Check the code." , room = user_id)
+            
+
+        
+        
        
         
-@socketio.on('username')
-def receive_username(username):
-    if len(rooms['users'] < 2):
-        rooms['users'][username] = request.sid
-        userId = rooms['users'][username]
-        usernames.append(username)
-        length = len(users)
-        emit('username', username, broadcast=True)
-        emit('private_message', f"You are Player {length} {username}" , room=userId)
-    elif(len(users) >= 2):
-        users[username] = request.sid
-        userId = users[username]
-        emit('private_message', "room_full", room=userId)
+# @socketio.on('username')
+# def receive_username(username):
+#     if len(rooms['users'] < 2):
+#         rooms['users'][username] = request.sid
+#         userId = rooms['users'][username]
+#         usernames.append(username)
+#         length = len(users)
+#         emit('username', username, broadcast=True)
+#         emit('private_message', f"You are Player {length} {username}" , room=userId)
+#     elif(len(users) >= 2):
+#         users[username] = request.sid
+#         userId = users[username]
+#         emit('private_message', "room_full", room=userId)
 
 
 # Listenening for the play of 'X' and 'O' then broadcast it to all clients

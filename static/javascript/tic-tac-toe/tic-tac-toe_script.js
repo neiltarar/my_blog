@@ -36,8 +36,7 @@ startNewGameButton.addEventListener("click" , (event)=> {
 
 joinAGame.addEventListener("click" , (event)=>{
     username = loginInput.value;
-    document.getElementById("game-type").style.display = 'none';
-    socket.emit("game_type" , `${roomId.value}-${username}`);
+    socket.emit("game_type" , `${roomId.value}-${username}`);    
 });
 
 const winningRules1 = [
@@ -94,9 +93,16 @@ startGame();
 
 // Listen messages from the server
 socket.on('session_id' , function(data) {
-    gameId.innerHTML = `<h4>${subString(data)}</h4>`
-    console.log(data)
-})
+    if(data === "Room Doesn't Exist, Check the code."){
+        alert(data);
+    } else if(data == "Room Is Full!!!"){
+        alert(data);
+    }else{
+        document.getElementById("game-type").style.display = 'none';
+        gameId.innerHTML = `<h4>${subString(data)}</h4>`
+        console.log(data)
+    };
+});
 
 
 
