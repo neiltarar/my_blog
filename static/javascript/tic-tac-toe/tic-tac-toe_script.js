@@ -11,7 +11,7 @@ const message = document.getElementById("message");
 const startNewGameButton = document.getElementById("start_new_game");
 const joinAGame = document.getElementById("join_a_game");
 const roomId = document.getElementById("room_id")
-const cells = document.querySelectorAll('#cell');
+const cells = document.querySelectorAll('.square');
 const restartButton = document.getElementById("restart");
 const board = document.getElementById("board");
 const winnerText = document.getElementById("gameEnd");
@@ -39,25 +39,6 @@ joinAGame.addEventListener("click" , (event)=>{
     socket.emit("game_type" , `${roomId.value}-${username}`);    
 });
 
-const winningRules1 = [
-    [0 , 1 , 2],
-    [3 , 4 , 5],
-    [6 , 7 , 8],
-    [0 , 3 , 6],
-    [1 , 4 , 7],
-    [2 , 5 , 8],
-    [0 , 4 , 8],
-    [2 , 4 , 6]
-]
-
-function winningRule(currentPlayer){
-    return winningRules.some(combination => {
-        return combination.every(index => {
-            return cells[index].textContent === currentPlayer;
-        })
-    })
-} 
-
 function swapSides() {
     circleTurn = !circleTurn;
 };
@@ -81,14 +62,10 @@ function startGame() {
     }
 }
     
-
 restartButton.addEventListener("click" , (event)=>{
-    socket.emit("restart", "restart")
-    startGame()
-    
+    socket.send("restart");
+    startGame();
 });
-
-startGame();
 
 
 // Listen messages from the server
@@ -100,7 +77,6 @@ socket.on('session_id' , function(data) {
     }else{
         document.getElementById("game-type").style.display = 'none';
         gameId.innerHTML = `<h4>Room: ${subString(data)}</h4>`
-        console.log(data)
     };
 });
 
@@ -153,3 +129,6 @@ socket.on('username', function(username){
     
     //document.getElementById("playerInfo").textContent = username;
 })
+
+// Start the game
+startGame();

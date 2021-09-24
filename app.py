@@ -1,6 +1,6 @@
 from datetime import date
 from flask import Flask, render_template, redirect, request, session
-from flask_socketio import SocketIO, join_room, leave_room, send, emit
+from flask_socketio import SocketIO, send, emit
 import os
 import bcrypt
 from decouple import config
@@ -167,17 +167,27 @@ def game_type(type):
             
 
 # Listenening for the play of 'X' and 'O' then broadcast it to all clients
+
 @socketio.on('message')
 def receive_message_event(message):
     global count
-   
+    global result
+    global winningRules2
     print(message)
     for i in games:
-        
-        if request.sid == i:
+        if message == "restart" and (request.sid == i or request.sid == games[i][1].split("-")[1]):
+            count = 0
+            result = []
+            room_1 = i
+            room_2 = games[i][1].split("-")[1]
+            socketio.send("restart", room = room_1)
+            socketio.send("restart", room = room_2)
+        elif request.sid == i:
             room_1 = i
             room_2 = games[i][1].split("-")[1]
             winningRule(message) 
+            print(count)
+            print(result)
             if(result == ['win']):
                 count = 0
                 result.clear()
@@ -194,6 +204,7 @@ def receive_message_event(message):
             room_1 = i
             room_2 = games[i][1].split("-")[1]
             winningRule(message) 
+            print(count)
             if(result == ['win']):
                 count = 0
                 result.clear()
@@ -207,22 +218,6 @@ def receive_message_event(message):
             socketio.send(message, room = room_1)
             socketio.send(message, room = room_2)
             
-            
-@socketio.on('restart')
-def restart(msg):
-    global winningRules1
-    winningRules1 = [
-    [0 , 1 , 2],
-    [3 , 4 , 5],
-    [6 , 7 , 8],
-    [0 , 3 , 6],
-    [1 , 4 , 7],
-    [2 , 5 , 8],
-    [0 , 4 , 8],
-    [2 , 4 , 6]
-]
-    if msg == "restart":
-        socketio.send(msg, broadcast=True)
     
 # Listening for the chat message and broadcast it to all clients
 @socketio.on('chat_message')
