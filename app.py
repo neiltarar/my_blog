@@ -148,7 +148,7 @@ def game_type(type):
         game_id = request.sid
         games[game_id] = [user_name]
         emit('session_id' , game_id , room = game_id)
-        print(games)
+        
     else:
         game_id = type[0]
         for i in games:
@@ -160,48 +160,52 @@ def game_type(type):
                 print(user_id)
                 games[i].append(user_name+'-'+user_id)
                 emit('session_id' , game_id , room = user_id)
-                print(games)
+                
             else:
                 user_id = request.sid
                 emit('session_id' , "Room Doesn't Exist, Check the code." , room = user_id)
             
 
-        
-        
-       
-        
-# @socketio.on('username')
-# def receive_username(username):
-#     if len(rooms['users'] < 2):
-#         rooms['users'][username] = request.sid
-#         userId = rooms['users'][username]
-#         usernames.append(username)
-#         length = len(users)
-#         emit('username', username, broadcast=True)
-#         emit('private_message', f"You are Player {length} {username}" , room=userId)
-#     elif(len(users) >= 2):
-#         users[username] = request.sid
-#         userId = users[username]
-#         emit('private_message', "room_full", room=userId)
-
-
 # Listenening for the play of 'X' and 'O' then broadcast it to all clients
 @socketio.on('message')
 def receive_message_event(message):
     global count
-    socketio.emit('one_move' , message[1], room = request.sid)
-    for i in range(2):
-        if(request.sid == users[usernames[i]]):
+   
+    print(message)
+    for i in games:
+        
+        if request.sid == i:
+            room_1 = i
+            room_2 = games[i][1].split("-")[1]
             winningRule(message) 
             if(result == ['win']):
                 count = 0
                 result.clear()
-                socketio.send(f"{usernames[i]} <br> WINS!!!", broadcast=True)
+                socketio.send(f"<br> WINS!!!", room = room_1)
+                socketio.send(f"<br> WINS!!!", room = room_2)
             elif(count == 9):
                 count = 0
-                socketio.send('DRAW' , broadcast = True)
-            socketio.send(message, broadcast=True)
-    
+                socketio.send('DRAW' , room = room_1)
+                socketio.send('DRAW' , room = room_2)
+            print(message)
+            socketio.send(message, room = room_1)
+            socketio.send(message, room = room_2)
+        elif request.sid == games[i][1].split("-")[1]:
+            room_1 = i
+            room_2 = games[i][1].split("-")[1]
+            winningRule(message) 
+            if(result == ['win']):
+                count = 0
+                result.clear()
+                socketio.send(f"<br> WINS!!!", room = room_1)
+                socketio.send(f"<br> WINS!!!", room = room_2)
+            elif(count == 9):
+                count = 0
+                socketio.send('DRAW' , room = room_1)
+                socketio.send('DRAW' , room = room_2)
+            print(message)
+            socketio.send(message, room = room_1)
+            socketio.send(message, room = room_2)
             
             
 @socketio.on('restart')

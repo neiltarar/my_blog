@@ -99,7 +99,7 @@ socket.on('session_id' , function(data) {
         alert(data);
     }else{
         document.getElementById("game-type").style.display = 'none';
-        gameId.innerHTML = `<h4>${subString(data)}</h4>`
+        gameId.innerHTML = `<h4>Room: ${subString(data)}</h4>`
         console.log(data)
     };
 });
@@ -107,7 +107,7 @@ socket.on('session_id' , function(data) {
 
 
 socket.on('message' , function(data) {
-    
+    console.log(data)
     // If one of the players press restart button, restart the game for both parties
     if(data === "restart"){
         startGame();
@@ -120,15 +120,7 @@ socket.on('message' , function(data) {
                 cell.textContent = data[1];
                 //cell.removeEventListener("click")
                 swapSides()
-                // socket.on('one_move' , function(msg){
-                    
-                //     if(msg === data[1]){
-                //         console.log('my move')
-                //         cell.removeEventListener("click")
-                //     } else {
-                //         cell.addEventListener("click" , clickManager , {once : true})
-                //     }
-                // })
+
             }
         }
     }
@@ -150,14 +142,7 @@ chatBar.addEventListener("keydown", function search(e){
     }
 })
 
-socket.on('private_message', function(msg){
-        if(msg === "room_full"){
-            fullRoom.classList.add('show')
-        } else{
-            alert(msg)
-    }
-    
-})
+
 
 socket.on('private_chat_message', function(msg){
     chatWrite.textContent = msg;
