@@ -5,7 +5,8 @@ const socket = io();
 const xClass = "X";
 const oClass = "O";
 
-const WINNING_COMBINATIONS = [
+// All the winning combinations
+const winning_rule = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -34,22 +35,7 @@ const loginButton = document.getElementById("loginButton");
 const fullRoom = document.getElementById("room_full");
 const gameId = document.getElementById('game-id');
 
-function checkWin(currentClass) {
-    return WINNING_COMBINATIONS.some(combination => {
-      return combination.every(index => {
-        return cells[index].classList.contains(currentClass)
-      })
-    })
-  }
-
-function placeMark(cell, currentClass) {
-    cell.classList.add(currentClass)
-}
-
-function subString(string) {
-    const subString = string.substring(string.length -10)
-    return subString
-}
+////////////////////////// Event Listeners //////////////////////////////
 
 startNewGameButton.addEventListener("click" , (event)=> {
     username = loginInput.value
@@ -61,6 +47,38 @@ joinAGame.addEventListener("click" , (event)=>{
     username = loginInput.value;
     socket.emit("game_type" , `${roomId.value}-${username}`);    
 });
+
+restartButton.addEventListener("click" , (event)=>{
+    socket.send("restart");
+});
+
+/////////////////////////////////////////////////////////////////////
+
+function checkWin(currentClass) {
+    return winning_rule.some(combination => {
+      return combination.every(index => {
+        return cells[index].classList.contains(currentClass)
+      })
+    })
+  }
+
+function draw(){
+    return[...cells].every(cell => {
+        // check if every cell class is switched to either 'O' or 'X' to detect the draw condition.
+        return cell.classList.contains(oClass) || cell.classList.contains(xClass);
+    });
+};
+
+function placeMark(cell, currentClass) {
+    // Add a class 'O' or 'X' to the cell to check for winning, draw conditions.
+    cell.classList.add(currentClass)
+}
+
+// cut the last 10 digits of the user id who started the game. 
+function subString(string) {
+    const subString = string.substring(string.length -10)
+    return subString
+}
 
 function swapSides() {
     circleTurn = !circleTurn;
@@ -74,6 +92,8 @@ function clickManager(event){
     socket.send(cell.dataset['cell']+currentMark);
     if(checkWin(currentMark)){
         socket.send("win");
+    }else if(draw()){
+        socket.send("draw");
     };
 };
 
@@ -89,19 +109,16 @@ function startGame() {
         cell.addEventListener("click", clickManager, {once: true})
     }
 }
-    
-restartButton.addEventListener("click" , (event)=>{
-    socket.send("restart");
-    
-});
-
 
 // Listen messages from the server
 socket.on('session_id' , function(data) {
-    if(data === "Room Doesn't Exist, Check the code."){
-        alert(data);
-    } else if(data == "Room Is Full!!!"){
-        alert(data);
+    if(data === "none"){
+        //alert(data);
+        roomId.value = ""
+        roomId.placeholder = "Room Doesn't Exist!";
+    } else if(data == "full"){
+        roomId.value = ""
+        roomId.placeholder = "Room is full!";
     }else{
         document.getElementById("game-type").style.display = 'none';
         gameId.innerHTML = `<h4>Room: ${subString(data)}</h4>`
@@ -110,34 +127,35 @@ socket.on('session_id' , function(data) {
 
 socket.on('message' , function(data) {
     
+    // Disconnect the user if inactive for 33 minutes. Time starts after the first play (when the firs message is sent to the server)
+    clearTimeout(socket.inactivityTimeout); 
+    socket.inactivityTimeout = setTimeout(function() {
+        socket.send('disconnected');
+        socket.disconnect(true);
+    }, 1000 * 2000);
+
+    // Mark cells on both side and add class 'O' and 'X' on each side. Send winning or draw messaged to both sides. 
     // If one of the players press restart button, restart the game for both parties
     if(data === "restart"){
         startGame();
-    }
-    
-    else if (data === 'DRAW'){
-        winnerText.innerHTML = `${data}`
+    }else if (data === 'draw'){
+        winnerText.innerHTML = "IT'S A <br> DRAW";
         message.classList.add('show');
-    }
-    else if(data[1] === "X" || data[1] === "O"){
+    }else if(data[1] === "X" || data[1] === "O"){
         for(cell of cells){
             // Matching the mark with the correct cell by checking its data-attribute
             if(cell.dataset['cell'] === data[0]){
                 cell.textContent = data[1];
-                //cell.removeEventListener("click")
-                
-                swapSides()
-
-            }
-        }
-    }
-    
-    else {
-        winnerText.innerHTML = `${data}`
+                //cell.removeEventListener("click");
+                placeMark(cell , data[1]);
+                swapSides();
+            };
+        };
+    }else {
+        winnerText.innerHTML = `${data}`;
         message.classList.add('show');
-    }
-
-})
+    };
+});
 
 chatButton.addEventListener("click", (event) =>{
     socket.emit('chat_message' , chatBar.value);
