@@ -37,12 +37,10 @@ const gameId = document.getElementById('game-id');
 function checkWin(currentClass) {
     return WINNING_COMBINATIONS.some(combination => {
       return combination.every(index => {
-          console.log(cells[index].classList)
         return cells[index].classList.contains(currentClass)
       })
     })
   }
-
 
 function placeMark(cell, currentClass) {
     cell.classList.add(currentClass)
@@ -74,10 +72,9 @@ function clickManager(event){
     // Sending the server which cell was marked and whether it was an "X" or "O"
     placeMark(cell , currentMark);
     socket.send(cell.dataset['cell']+currentMark);
-    console.log(checkWin(currentMark))
     if(checkWin(currentMark)){
         socket.send("win");
-    }
+    };
 };
 
 function startGame() {
@@ -112,12 +109,16 @@ socket.on('session_id' , function(data) {
 });
 
 socket.on('message' , function(data) {
-    console.log(data)
+    
     // If one of the players press restart button, restart the game for both parties
     if(data === "restart"){
         startGame();
     }
     
+    else if (data === 'DRAW'){
+        winnerText.innerHTML = `${data}`
+        message.classList.add('show');
+    }
     else if(data[1] === "X" || data[1] === "O"){
         for(cell of cells){
             // Matching the mark with the correct cell by checking its data-attribute

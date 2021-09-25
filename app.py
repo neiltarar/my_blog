@@ -166,14 +166,15 @@ def game_type(type):
             
 
 # Listenening for the play of 'X' and 'O' then broadcast it to all clients
-
+count = 0
 @socketio.on('message')
 def receive_message_event(message):
-
-    print(message)
+    global count
+    count += 1
+    
     for i in games:
+        print(count)
         if message == "restart" and (request.sid == i or request.sid == games[i][1].split("-")[1]):
-
             room_1 = i
             room_2 = games[i][1].split("-")[1]
             socketio.send("restart", room = room_1)
@@ -182,35 +183,33 @@ def receive_message_event(message):
         elif request.sid == i:
             room_1 = i
             room_2 = games[i][1].split("-")[1]
-       
-          
+            
             if(message == 'win'):
-                
-                
+                count = 0
                 socketio.send(f"<br> WINS!!!", room = room_1)
                 socketio.send(f"<br> WINS!!!", room = room_2)
-                
-                
-            # elif(count == 9):
-            #     count = 0
-            #     socketio.send('DRAW' , room = room_1)
-            #     socketio.send('DRAW' , room = room_2)
+            
+            elif(count == 9):
+                count = 0
+                socketio.send('DRAW' , room = room_1)
+                socketio.send('DRAW' , room = room_2)
             
             socketio.send(message, room = room_1)
             socketio.send(message, room = room_2)
+       
         elif request.sid == games[i][1].split("-")[1]:
             room_1 = i
             room_2 = games[i][1].split("-")[1]
 
             if(message == 'win'):
-                
+                count = 0
                 socketio.send(f"<br> WINS!!!", room = room_1)
                 socketio.send(f"<br> WINS!!!", room = room_2)
                 
-            # elif(count == 9):
-            #     count = 0
-            #     socketio.send('DRAW' , room = room_1)
-            #     socketio.send('DRAW' , room = room_2)
+            elif(count == 9):
+                count = 0
+                socketio.send('DRAW' , room = room_1)
+                socketio.send('DRAW' , room = room_2)
  
             socketio.send(message, room = room_1)
             socketio.send(message, room = room_2)
