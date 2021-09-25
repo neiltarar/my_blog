@@ -1,7 +1,4 @@
 #!signup_login.py
-
-from logging import log
-import psycopg2 as data
 from database import sql_check, sql_write , sql_select
 
 def signup_new_user(email, username , password_hash):

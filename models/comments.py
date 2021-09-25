@@ -1,5 +1,5 @@
 #!comments.py
-import psycopg2 as data
+
 from database import sql_select , sql_write
 
 def read_comment(url):

@@ -1,11 +1,10 @@
 from datetime import date
 from flask import Flask, render_template, redirect, request, session
 from flask_socketio import SocketIO, send, emit
-import os
 import bcrypt
 from decouple import config
 
-from models.tictactoe_logic import *
+from models.tictactoe_logic import count, result
 from models.comments import delete_comment, read_comment, write_comment, edit_comment
 from models.signup_login import login_check, signup_new_user, score_save, get_score, get_user_score
 
@@ -170,51 +169,49 @@ def game_type(type):
 
 @socketio.on('message')
 def receive_message_event(message):
-    global count
-    global result
-    global winningRules2
+
     print(message)
     for i in games:
         if message == "restart" and (request.sid == i or request.sid == games[i][1].split("-")[1]):
-            count = 0
-            result = []
+
             room_1 = i
             room_2 = games[i][1].split("-")[1]
             socketio.send("restart", room = room_1)
             socketio.send("restart", room = room_2)
+            
         elif request.sid == i:
             room_1 = i
             room_2 = games[i][1].split("-")[1]
-            winningRule(message) 
-            print(count)
-            print(result)
-            if(result == ['win']):
-                count = 0
-                result.clear()
+       
+          
+            if(message == 'win'):
+                
+                
                 socketio.send(f"<br> WINS!!!", room = room_1)
                 socketio.send(f"<br> WINS!!!", room = room_2)
-            elif(count == 9):
-                count = 0
-                socketio.send('DRAW' , room = room_1)
-                socketio.send('DRAW' , room = room_2)
-            print(message)
+                
+                
+            # elif(count == 9):
+            #     count = 0
+            #     socketio.send('DRAW' , room = room_1)
+            #     socketio.send('DRAW' , room = room_2)
+            
             socketio.send(message, room = room_1)
             socketio.send(message, room = room_2)
         elif request.sid == games[i][1].split("-")[1]:
             room_1 = i
             room_2 = games[i][1].split("-")[1]
-            winningRule(message) 
-            print(count)
-            if(result == ['win']):
-                count = 0
-                result.clear()
+
+            if(message == 'win'):
+                
                 socketio.send(f"<br> WINS!!!", room = room_1)
                 socketio.send(f"<br> WINS!!!", room = room_2)
-            elif(count == 9):
-                count = 0
-                socketio.send('DRAW' , room = room_1)
-                socketio.send('DRAW' , room = room_2)
-            print(message)
+                
+            # elif(count == 9):
+            #     count = 0
+            #     socketio.send('DRAW' , room = room_1)
+            #     socketio.send('DRAW' , room = room_2)
+ 
             socketio.send(message, room = room_1)
             socketio.send(message, room = room_2)
             
