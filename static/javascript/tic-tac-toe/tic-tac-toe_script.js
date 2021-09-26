@@ -5,6 +5,9 @@ const socket = io();
 const xClass = "X";
 const oClass = "O";
 
+// Set a toggle to force the players to wait for their turns.
+let toggle = 'on';
+
 // All the winning combinations
 const winning_rule = [
     [0, 1, 2],
@@ -71,6 +74,7 @@ function draw(){
 function placeMark(cell, currentClass) {
     // Add a class 'O' or 'X' to the cell to check for winning, draw conditions.
     cell.classList.add(currentClass);
+    // Mark the played token on the board of the current player, and the play will be sent to the opponent via socketio.
     cell.textContent = currentClass;
 };
 
@@ -84,13 +88,12 @@ function swapSides() {
     circleTurn = !circleTurn;
 };
 
-let toggle = 'on';
-
 function clickManager(event){ 
     const cell = event.target;
     const currentMark = circleTurn ? oClass : xClass;
     // Sending the server which cell was marked and whether it was an "X" or "O"
     
+    // if the toggle is on player can make a move then turn the toggle off to wait for the opponent to make a move.
     if(toggle === 'on'){
         placeMark(cell , currentMark);
         socket.send(cell.dataset['cell']+currentMark);
@@ -134,10 +137,9 @@ socket.on('session_id' , function(data) {
 });
 
 socket.on('message' , function(data) {
-    console.log(data);
-    console.log(toggle);
+    // let the player play (after waiting for their turn)
     toggle = 'on';
-    console.log(toggle);
+
     // Disconnect the user if inactive for 33 minutes. Time starts after the first play (when the firs message is sent to the server)
     clearTimeout(socket.inactivityTimeout); 
     socket.inactivityTimeout = setTimeout(function() {
