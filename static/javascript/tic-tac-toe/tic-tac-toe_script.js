@@ -39,7 +39,6 @@ const gameId = document.getElementById('game-id');
 
 startNewGameButton.addEventListener("click" , (event)=> {
     username = loginInput.value
-    document.getElementById("game-type").style.display = 'none';
     socket.emit("game_type" , `new_game-${username}`);
 });
 
@@ -126,7 +125,7 @@ socket.on('session_id' , function(data) {
 });
 
 socket.on('message' , function(data) {
-    
+   
     // Disconnect the user if inactive for 33 minutes. Time starts after the first play (when the firs message is sent to the server)
     clearTimeout(socket.inactivityTimeout); 
     socket.inactivityTimeout = setTimeout(function() {
@@ -143,10 +142,11 @@ socket.on('message' , function(data) {
         message.classList.add('show');
     }else if(data[1] === "X" || data[1] === "O"){
         for(cell of cells){
+            
             // Matching the mark with the correct cell by checking its data-attribute
             if(cell.dataset['cell'] === data[0]){
+                
                 cell.textContent = data[1];
-                //cell.removeEventListener("click");
                 placeMark(cell , data[1]);
                 swapSides();
             };
