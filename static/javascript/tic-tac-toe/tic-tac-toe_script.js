@@ -70,8 +70,9 @@ function draw(){
 
 function placeMark(cell, currentClass) {
     // Add a class 'O' or 'X' to the cell to check for winning, draw conditions.
-    cell.classList.add(currentClass)
-}
+    cell.classList.add(currentClass);
+    cell.textContent = currentClass;
+};
 
 // cut the last 10 digits of the user id who started the game. 
 function subString(string) {
@@ -83,12 +84,20 @@ function swapSides() {
     circleTurn = !circleTurn;
 };
 
+let toggle = 'on';
+
 function clickManager(event){ 
     const cell = event.target;
     const currentMark = circleTurn ? oClass : xClass;
     // Sending the server which cell was marked and whether it was an "X" or "O"
-    placeMark(cell , currentMark);
-    socket.send(cell.dataset['cell']+currentMark);
+    
+    if(toggle === 'on'){
+        placeMark(cell , currentMark);
+        socket.send(cell.dataset['cell']+currentMark);
+        toggle = 'off';
+    };
+    // here remove event listener 
+    
     if(checkWin(currentMark)){
         socket.send("win");
     }else if(draw()){
@@ -106,8 +115,8 @@ function startGame() {
         cell.textContent = "";
         cell.removeEventListener("click", clickManager)
         cell.addEventListener("click", clickManager, {once: true})
-    }
-}
+    };
+};
 
 // Listen messages from the server
 socket.on('session_id' , function(data) {
@@ -125,7 +134,10 @@ socket.on('session_id' , function(data) {
 });
 
 socket.on('message' , function(data) {
-   
+    console.log(data);
+    console.log(toggle);
+    toggle = 'on';
+    console.log(toggle);
     // Disconnect the user if inactive for 33 minutes. Time starts after the first play (when the firs message is sent to the server)
     clearTimeout(socket.inactivityTimeout); 
     socket.inactivityTimeout = setTimeout(function() {
@@ -145,10 +157,10 @@ socket.on('message' , function(data) {
             
             // Matching the mark with the correct cell by checking its data-attribute
             if(cell.dataset['cell'] === data[0]){
-                
                 cell.textContent = data[1];
                 placeMark(cell , data[1]);
                 swapSides();
+                
             };
         };
     }else {

@@ -199,7 +199,7 @@ def receive_message_event(message):
                 room_1 = i
                 room_2 = games[i][1].split("-")[1]
                 user_name = games[i][0]
-                socketio.send(message, room = room_1)
+                #socketio.send(message, room = room_1)
                 socketio.send(message, room = room_2)
                 if(message == 'win'):
                     socketio.send(f"{user_name} <br> WINS!!!", room = room_1)
@@ -214,7 +214,7 @@ def receive_message_event(message):
                 room_2 = games[i][1].split("-")[1]
                 user_name = games[i][1].split("-")[0]
                 socketio.send(message, room = room_1)
-                socketio.send(message, room = room_2)
+                #socketio.send(message, room = room_2)
                 if(message == 'win'):
                     socketio.send(f"{user_name} <br> WINS!!!", room = room_1)
                     socketio.send(f"{user_name} <br> WINS!!!", room = room_2)
