@@ -9,8 +9,15 @@
     src: url('../../static/fonts/games-cufonfonts/Games.ttf') format('truetype')
 }
 
+@font-face {
+    font-family: 'sh-pinscher';
+    src: url('../fonts/sh-pincher/SHPinscher-Regular.otf');
+   
+}
+
 .main {
     justify-content: flex-start;
+    align-items: center;
 }
 
 body {
@@ -21,6 +28,9 @@ body {
 }
 
 button {
+    font-size: 15pt;
+    height: 45px;
+    margin: 20px;
     font-family: 'arcade-classic';
     background-color: black;
     color: white;
@@ -84,23 +94,6 @@ p {
     border-right: none;
 }
 
-#token {
-    width: auto;
-    height: auto;
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: -55;
-    bottom: -85;
-    background-color: rgba(99, 97, 224, 0.9);
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 5rem;
-    flex-direction: column;
-}
-
 #message {
     width: auto;
     height: auto;
@@ -129,10 +122,23 @@ p {
 }
 
 #chatBox {
+    font-family: "sh-pinscher","Chicago Plain",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
     padding-top: 50px;   
 }
 
-#receiveMessage {
+#chatInput {
+    padding: 20px;
+    width: 250px;
+}
+
+#receiveMessage::after {
+    font-family: "sh-pinscher","Chicago Plain",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    max-width: 600px;
+    text-align: initial;
+    font-size: 10pt;
     margin: 0;
     padding-top: 20px;
     font-family: 'arcade-classic';
@@ -156,7 +162,7 @@ input {
     left: 0;
     right: -55px;
     bottom: -165px;
-    background-color: rgba(99, 97, 224, 0.9);
+    background-color: rgba(99, 97, 224, 0.959);
     justify-content: center;
     align-items: center;
     color: white;

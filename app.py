@@ -226,7 +226,18 @@ def receive_message_event(message):
 # Listening for the chat message and broadcast it to all clients
 @socketio.on('chat_message')
 def send_chat_message(chat_message):
-    socketio.emit('private_chat_message', chat_message, broadcast=True)
-
+    for i in games:
+        if request.sid == i: 
+            user_1 = games[i][0]
+            room_1 = i 
+            room_2 = games[i][1].split("-")[1]
+            socketio.emit('private_chat_message', f"{user_1}: {chat_message}" , room = room_1)
+            socketio.emit('private_chat_message', f"{user_1}: {chat_message}" , room = room_2)
+        elif request.sid == games[i][1].split("-")[1]:
+            user_2 = games[i][1].split("-")[0]
+            room_1 = i
+            room_2 = games[i][1].split("-")[1]
+            socketio.emit('private_chat_message', f"{user_2}: {chat_message}", room = room_1)
+            socketio.emit('private_chat_message', f"{user_2}: {chat_message}", room = room_2)
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port= 9000)

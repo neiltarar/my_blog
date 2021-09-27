@@ -32,21 +32,19 @@
     <div id="chatBox">
             <input id="chatInput" placeholder="Type your message here..." onkeydown="search(this)"> 
             <button id="messageButton">send message</button>
-            <p id="receiveMessage"></p>
+            <ul id="receiveMessage">
+                <br>
+            </ul>
     </div>
     <div id="room_full">
         <p> Room is full!</p>
     </div>
     </div>
     <div id="game-type">
-        
         <input id="loginId" placeholder="What is your username" required = "required" name="user_name">
-        <br>
         <button type="submit" id="start_new_game"> START A NEW GAME </button>
-        <br>
         <input type="text" id="room_id" placeholder="Put Room Id Here">
         <button type="submit" id="join_a_game"> JOIN A GAME </button>
-       
     </div>
     <div id="message">
         <div id="gameEnd"></div>

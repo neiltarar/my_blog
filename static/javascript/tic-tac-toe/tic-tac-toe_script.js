@@ -97,6 +97,7 @@ function clickManager(event){
     if(toggle === 'on'){
         placeMark(cell , currentMark);
         socket.send(cell.dataset['cell']+currentMark);
+        swapSides()
         toggle = 'off';
     };
     // here remove event listener 
@@ -137,6 +138,7 @@ socket.on('session_id' , function(data) {
 });
 
 socket.on('message' , function(data) {
+   
     // let the player play (after waiting for their turn)
     toggle = 'on';
 
@@ -161,8 +163,7 @@ socket.on('message' , function(data) {
             if(cell.dataset['cell'] === data[0]){
                 cell.textContent = data[1];
                 placeMark(cell , data[1]);
-                swapSides();
-                
+                swapSides()
             };
         };
     }else {
@@ -182,8 +183,11 @@ chatBar.addEventListener("keydown", function search(e){
 })
 
 socket.on('private_chat_message', function(msg){
-    chatWrite.textContent = msg;
-    chatBar.value = ""
+    const liElement = document.createElement("li");
+    const message = document.createTextNode(msg);
+    liElement.appendChild(message);
+    chatWrite.prepend(liElement);
+    chatBar.value = "";
 })
 
 // Start the game
