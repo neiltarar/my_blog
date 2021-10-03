@@ -4,7 +4,6 @@ from flask_socketio import SocketIO, send, emit
 import bcrypt
 from decouple import config
 
-from models.tictactoe_logic import count, result
 from models.comments import delete_comment, read_comment, write_comment, edit_comment
 from models.signup_login import login_check, signup_new_user, score_save, get_score, get_user_score
 
