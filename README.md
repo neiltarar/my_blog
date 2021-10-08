@@ -3,7 +3,7 @@
 <br><br/>
 ![mock_image](./static/images/mock_images/my_blog/my_blog_main_mock.png)
 <br><br/>
-# Dependencies:
+# Dependencies :
 
 - For full list please check [here](./requirements.txt)
 - https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js
