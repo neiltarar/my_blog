@@ -62,7 +62,6 @@ def login():
             user_name = result[4]
             session['user_id'] = user_id
             session['user_name'] = user_name
-            
             return redirect(request.referrer)
 
 @app.route('/logout' , methods=["POST"])
@@ -84,7 +83,7 @@ def tic_tac_toe():
     url = request.url.split("/")[::-1][0]
     comments = read_comment(url)
     user = session.get('user_name')
-    return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments , user=user )
+    return render_template('posts/tic-tac-toe-blogpost.jinja' , comments = comments , user = user )
 
 @app.route('/tic-tac-toe-play' , methods=["GET" ,"POST"])
 def tictactoeplay():
@@ -96,7 +95,7 @@ def robot_arm():
     url = request.url.split("/")[::-1][0]
     comments = read_comment(url)
     user = session.get('user_name')
-    return render_template('posts/robot-arm.jinja' , comments = comments , user=user )
+    return render_template('posts/robot-arm.jinja' , comments = comments , user = user )
 
 ########################## HANDLE POST/GET REQUESTS ################################################
 
@@ -131,7 +130,7 @@ def edit():
     return render_template('/edit.jinja', comment_id = comment_id, comment = comment, url = url)
 
 
-@app.route('/delete', methods=["POST"])
+@app.route('/delete', methods = ["POST"])
 def delete():
     comment_id = request.form.get("comment-id")
     delete_comment(comment_id)
