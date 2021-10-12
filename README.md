@@ -9,6 +9,7 @@
 - https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js
 <br> <br/>
 
+
 ### Installation of dependencies:
 
 Please intall the adviced versions, there are some backwards compatibility issues with SocketIO.
