@@ -2,7 +2,7 @@
 import psycopg2
 
 def sql_select(query, params):
-    conn = psycopg2.connect("dbname=my_blog user = clckwrk")
+    conn = psycopg2.connect("dbname=my_blog user = server")
     cur = conn.cursor()
     cur.execute(query, params)
     results = cur.fetchall()
@@ -11,7 +11,7 @@ def sql_select(query, params):
     return results
 
 def sql_write(query , params):
-    conn = psycopg2.connect("dbname=my_blog user = clckwrk")
+    conn = psycopg2.connect("dbname=my_blog user = server")
     cur = conn.cursor()
     cur.execute(query , params)
     conn.commit()
@@ -19,7 +19,7 @@ def sql_write(query , params):
     conn.close()
 
 def sql_check(query):
-    conn = psycopg2.connect("dbname=my_blog user = clckwrk")
+    conn = psycopg2.connect("dbname=my_blog user = server")
     cur = conn.cursor()
     cur.execute(query)
     results = cur.fetchall()
